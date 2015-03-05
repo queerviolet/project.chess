@@ -73,9 +73,23 @@ describe 'Piece' do
   end
 end
 
+describe 'Pawn' do
+
+  let(:pawn_piece) { Pawn.new([5,0], 'white') }
+
+  describe '#move' do
+    it "can't move backwards" do
+      expect(pawn_piece.move[4,0]).to eq([5,0])
+    end
+
+end
+
+
 # Column are a - h
 # Rows are 0 - 7
 
 describe 'Board' do
 
 end
+
+# TODO: logic of capture
