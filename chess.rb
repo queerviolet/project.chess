@@ -6,11 +6,11 @@ class Piece
   end
 # making case statement for pieces by type
 
-  def self.make(type)
+  def self.make
 
   end
 
-  def available_path(type)
+  def available_path
     #case statement depending on type of piece
     #queen can move in any direction (up to 8 spaces)
     #king can move in any direction (one space) at a time
@@ -23,19 +23,84 @@ class Piece
 
 end
 
+class Rook < Piece
+  def initialize(:color)
+  end
+end
+
+class Knight < Piece
+  def initialize(:color)
+  end
+end
+
+class Bishop < Piece
+  def initialize(:color)
+  end
+end
+
+class Queen < Piece
+  def initialize(:color)
+  end
+end
+
+class King < Piece
+  def initialize(:color)
+  end
+end
+
+class Pawn < Piece
+  def initialize(:color)
+  end
+end
+
+
 class Board
-  def initialize
+  attr_reader :width, :height
+
+  # def method_name
+
+  # end
+  def initialize(width = 8, height = 8)
+    @width = width
+    @height = height
+    @board = Board.new(width, height)
+
+    (0..8).each do |x|
+      @board[x,1] = Pawn.new( :bla)
+      @board[x,6] = Pawn.new( :whi)
+    end
+
+    @board[0,0] = Rook.new( :black)
+    @board[1,0] = Knight.new( :black)
+    @board[2,0] = Bishop.new( :black)
+    @board[3,0] = Queen.new( :black)
+    @board[4,0] = King.new( :black)
+    @board[5,0] = Bishop.new( :black)
+    @board[6,0] = Knight.new( :black)
+    @board[7,0] = Rook.new( :black)
+
+    @board[0,7] = Rook.new( :white)
+    @board[1,7] = Knight.new( :white)
+    @board[2,7] = Bishop.new( :white)
+    @board[3,7] = King.new( :white)
+    @board[4,7] = Queen.new( :white)
+    @board[5,7] = Bishop.new( :white)
+    @board[6,7] = Knight.new( :white)
+    @board[7,7] = Rook.new( :white)
+  end
+
     #set a width(8) and a height(8)
     #create an array of piece objects (e.g. @board = Array.new(@width) {[]})
 
     #location of pieces
     #add pieces to the board
     #create board
-  end
+
+    #board = ['Rook.new(color)']
 
   def self.board
      #for players white and black: make all of these things -------
-                      #board = ['Piece.new(rook, color)']
+                      #board = ['Rook.new(rook, color)']
       #make eight pawns
       #make two rooks pieces
       #make one king piece
@@ -61,3 +126,5 @@ class Game
   def initialize
   end
 end
+
+#board = Board.new
