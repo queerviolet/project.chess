@@ -23,43 +23,102 @@ class Piece
 
 end
 
-class Rook < Piece #Max
+# pass current_position for current_y, current_x and where
+# they want to move it to move_position for move_x, move_y
+class Rook < Piece
+# include Movement
   def initialize(color)
     @color = color
   end
-end
 
-class Knight < Piece #Tracy
-  def initialize(color)
-    @color = color
+  def valid_move?(dy, dx)
+    (dy = 0 && dx.abs >= 7) || (dy.abs >= 7 && dx = 0)
   end
 end
 
-class Bishop < Piece #Lauren
+# pass current_position for current_y, current_x and where
+# they want to move it to move_position for move_x, move_y
+class Knight < Piece
   def initialize(color)
     @color = color
+   # possible_moves from [y][x]= [y+1][x-2], [y-1][x-2], [y+1][x+2], [y-1][x+2], [y+2][x-1], [y-2][x-1], [y+2][x+1], [y-2][x+1]
+  end
+
+  def valid_move?(dy, dx)
+    (dy.abs = 1 && dx.abs = 2) || (dy.abs = 2 && dx.abs = 1)
   end
 end
 
-class Queen < Piece #Kurt
+# pass current_position for current_y, current_x and where
+# they want to move it to move_position for move_x, move_y
+class Bishop < Piece
   def initialize(color)
     @color = color
-    # a queen moves any amount of spaces in all eight directions
-    # until a a piece obstructs it (or player chooses to stop)
-    # unless it is an opponent's piece
-    # then it captures that piece and takes it's spot
+  end
+
+  def valid_move?(dy, dx)
+    dy.abs = dx.abs
   end
 end
 
+# pass current_position for current_y, current_x and where
+# they want to move it to move_position for move_x, move_y
+class Queen < Piece
+  def initialize(color)
+    @color = color
+    # a queen moves from (y, x) => (y + z, x    ) forward
+                                #   (y    , x + z) right
+                                #  (y - z, x    ) backward
+                                #  (y    , x - z) left
+                                #  (y + z, x + z) diag up right
+                                #  (y + z, x - z) diag up left
+                                #  (y - z, x + z) diag down right
+                                #  (y - z, x - z) diag down left
+  end
+
+  def valid_move?(dy, dx)
+    (dy.abs = dx.abs) || (dy = 0 && dx.abs >= 7) || (dy.abs >= 7 && dx = 0)
+  end
+end
+
+# pass current_position for current_y, current_x and where
+# they want to move it to move_position for move_x, move_y
 class King < Piece
   def initialize(color)
     @color = color
   end
+
+  def valid_move?(dy, dx)
+    (dy.abs = dx.abs = 1) || (dy.abs = 1 && dx.abs = 0) || (dy.abs = 0 && dx.abs = 1)
+  end
 end
 
+# pass current_position for current_y, current_x and where
+# they want to move it to move_position for move_x, move_y
 class Pawn < Piece
   def initialize(color)
     @color = color
+  end
+
+  def valid_move?(dy, dx)
+   # if move counter == 1
+    # if black
+      # (dy = 1 && dx = 0) || (dy = 2 && dx = 0)
+    # else white
+      # (dy = -1 && dx = 0) || (dy = -2 && dx = 0)
+    # end
+   # elsif normal move
+    # if black
+      # (dy = 1 && dx = 0)
+    # else white
+      # (dy = -1 && dx = 0)
+    # end
+  # else attack move
+    # if black
+      # (dy = 1 && dx.abs = 1)
+    # else white
+      # (dy = -1 && dx.abs = 1)
+    # end
   end
 end
 
