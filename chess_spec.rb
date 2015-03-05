@@ -16,9 +16,9 @@ describe 'Piece' do
   #   end
   # end
 
-  let(:white_piece1) { Piece.new([0,0], 'white', [] }
-  let(:white_piece2) { Piece.new([0,1], 'white', [] }
-  let(:black_piece1) { Piece.new([7,0], 'black', [] }
+  let(:white_piece1) { Piece.new([0,0], 'white', [1,0]) }
+  let(:white_piece2) { Piece.new([0,1], 'white', []) }
+  let(:black_piece1) { Piece.new([7,0], 'black', []) }
   #input:
   #  location - this is where the piece is set originally
   #  state - what colour is this piece
@@ -42,6 +42,14 @@ describe 'Piece' do
     it 'has one argument' do
       expect(Piece.instance_method(:move).arity).to eq(1)
     end
+
+    it 'can move to new coordinates' do
+      expect(white_piece1.move([1,0])).to eq([1,0])
+    end
+
+    it 'cannot move to new coordinates' do
+      expect(white_piece1.move([9,9])).to eq([0,0])
+    end
   end
 
   # this is for the victim piece that may or may not be attacked
@@ -52,7 +60,15 @@ describe 'Piece' do
 
     # argument is the attacker's state on the victim piece
     it 'has one argument' do
-        expect(Piece.instance_method(:capturable?)).to eq(1)
+      expect(Piece.instance_method(:capturable?)).to eq(1)
+    end
+
+    it 'is getting captured' do
+      expect(white_piece1.capturable?('black')).to eq(true)
+    end
+
+    it 'is not getting captured' do
+      expect(white_piece1.capturable?('white')).to eq(false)
     end
   end
 end
