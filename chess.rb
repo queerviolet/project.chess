@@ -23,27 +23,31 @@ class Piece
 
 end
 
-class Rook < Piece
+class Rook < Piece #Max
   def initialize(color)
     @color = color
   end
 end
 
-class Knight < Piece
+class Knight < Piece #Tracy
   def initialize(color)
     @color = color
   end
 end
 
-class Bishop < Piece
+class Bishop < Piece #Lauren
   def initialize(color)
     @color = color
   end
 end
 
-class Queen < Piece
+class Queen < Piece #Kurt
   def initialize(color)
     @color = color
+    # a queen moves any amount of spaces in all eight directions
+    # until a a piece obstructs it (or player chooses to stop)
+    # unless it is an opponent's piece
+    # then it captures that piece and takes it's spot
   end
 end
 
@@ -63,14 +67,15 @@ end
 class Board
   attr_reader :width, :height
 
-  def initialize(width = 8, height = 8)
-    @width = width
-    @height = height
-    @board = Array.new(width) {Array.new(height)}
+  def initialize(height = 8, width = 8)
+    @height, @width = height, width
+    @board = Array.new(height) {Array.new(width)}
 
-    (0..7).each do |y|
-      @board[1][y] = Pawn.new( "black")
-      @board[6][y] = Pawn.new( "white")
+    #fill the board using [y][x]
+    #y is the row and x is the column
+    (0..7).each do |x|
+      @board[1][x] = Pawn.new( "black")
+      @board[6][x] = Pawn.new( "white")
     end
 
     @board[0][0] = Rook.new("black")
