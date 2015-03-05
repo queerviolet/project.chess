@@ -24,32 +24,38 @@ class Piece
 end
 
 class Rook < Piece
-  def initialize(:color)
+  def initialize(color)
+    @color = color
   end
 end
 
 class Knight < Piece
-  def initialize(:color)
+  def initialize(color)
+    @color = color
   end
 end
 
 class Bishop < Piece
-  def initialize(:color)
+  def initialize(color)
+    @color = color
   end
 end
 
 class Queen < Piece
-  def initialize(:color)
+  def initialize(color)
+    @color = color
   end
 end
 
 class King < Piece
-  def initialize(:color)
+  def initialize(color)
+    @color = color
   end
 end
 
 class Pawn < Piece
-  def initialize(:color)
+  def initialize(color)
+    @color = color
   end
 end
 
@@ -57,36 +63,33 @@ end
 class Board
   attr_reader :width, :height
 
-  # def method_name
-
-  # end
   def initialize(width = 8, height = 8)
     @width = width
     @height = height
-    @board = Board.new(width, height)
+    @board = Array.new(width) {Array.new(height)}
 
-    (0..8).each do |x|
-      @board[x,1] = Pawn.new( :bla)
-      @board[x,6] = Pawn.new( :whi)
+    (0..7).each do |y|
+      @board[1][y] = Pawn.new( "black")
+      @board[6][y] = Pawn.new( "white")
     end
 
-    @board[0,0] = Rook.new( :black)
-    @board[1,0] = Knight.new( :black)
-    @board[2,0] = Bishop.new( :black)
-    @board[3,0] = Queen.new( :black)
-    @board[4,0] = King.new( :black)
-    @board[5,0] = Bishop.new( :black)
-    @board[6,0] = Knight.new( :black)
-    @board[7,0] = Rook.new( :black)
+    @board[0][0] = Rook.new("black")
+    @board[0][1] = Knight.new("black")
+    @board[0][2] = Bishop.new("black")
+    @board[0][3] = Queen.new( "black")
+    @board[0][4] = King.new( "black")
+    @board[0][5] = Bishop.new( "black")
+    @board[0][6] = Knight.new( "black")
+    @board[0][7] = Rook.new( "black")
 
-    @board[0,7] = Rook.new( :white)
-    @board[1,7] = Knight.new( :white)
-    @board[2,7] = Bishop.new( :white)
-    @board[3,7] = King.new( :white)
-    @board[4,7] = Queen.new( :white)
-    @board[5,7] = Bishop.new( :white)
-    @board[6,7] = Knight.new( :white)
-    @board[7,7] = Rook.new( :white)
+    @board[7][0] = Rook.new( "white")
+    @board[7][1] = Knight.new( "white")
+    @board[7][2] = Bishop.new( "white")
+    @board[7][3] = King.new( "white")
+    @board[7][4] = Queen.new( "white")
+    @board[7][5] = Bishop.new( "white")
+    @board[7][6] = Knight.new( "white")
+    @board[7][7] = Rook.new( "white")
   end
 
     #set a width(8) and a height(8)
@@ -127,4 +130,4 @@ class Game
   end
 end
 
-#board = Board.new
+p board = Board.new

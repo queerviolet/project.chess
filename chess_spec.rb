@@ -20,4 +20,7 @@ describe 'Board' do
     expect(board.pieces.empty?). to equal(true)
   end
 
+  it 'has thirty-two empty slots that are equal to nil' do
+    expect(board.pieces.empty?).to equal(32)
+  end
 end
