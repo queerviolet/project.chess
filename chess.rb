@@ -32,7 +32,7 @@ class Rook < Piece
   end
 
   def valid_move?(dy, dx)
-    (dy = 0 && dx.abs >= 7) || (dy.abs >= 7 && dx = 0)
+    (dx.abs >= 7 && dy = 0) || (dx = 0 && dy.abs >= 7)
   end
 end
 
@@ -45,7 +45,7 @@ class Knight < Piece
   end
 
   def valid_move?(dy, dx)
-    (dy.abs = 1 && dx.abs = 2) || (dy.abs = 2 && dx.abs = 1)
+    (dx.abs = 2 && dy.abs = 1) || (dx.abs = 1 && dy.abs = 2)
   end
 end
 
@@ -57,7 +57,7 @@ class Bishop < Piece
   end
 
   def valid_move?(dy, dx)
-    dy.abs = dx.abs
+    dx.abs = dy.abs
   end
 end
 
@@ -66,18 +66,11 @@ end
 class Queen < Piece
   def initialize(color)
     @color = color
-    # a queen moves from (y, x) => (y + z, x    ) forward
-                                #   (y    , x + z) right
-                                #  (y - z, x    ) backward
-                                #  (y    , x - z) left
-                                #  (y + z, x + z) diag up right
-                                #  (y + z, x - z) diag up left
-                                #  (y - z, x + z) diag down right
-                                #  (y - z, x - z) diag down left
+
   end
 
   def valid_move?(dy, dx)
-    (dy.abs = dx.abs) || (dy = 0 && dx.abs >= 7) || (dy.abs >= 7 && dx = 0)
+    (dx.abs = dy.abs) || (dx.abs >= 7 && dy = 0) || (dx = 0 && dy.abs >= 7)
   end
 end
 
@@ -89,7 +82,7 @@ class King < Piece
   end
 
   def valid_move?(dy, dx)
-    (dy.abs = dx.abs = 1) || (dy.abs = 1 && dx.abs = 0) || (dy.abs = 0 && dx.abs = 1)
+    (dx.abs = dy.abs = 1) || (dx = 0 && dy.abs = 1) || (dx.abs = 1 && dy = 0)
   end
 end
 
@@ -103,21 +96,21 @@ class Pawn < Piece
   def valid_move?(dy, dx)
    # if move counter == 1
     # if black
-      # (dy = 1 && dx = 0) || (dy = 2 && dx = 0)
+      # (dx = 0 && dy = -1) || (dx = 0 && dy = -2)
     # else white
-      # (dy = -1 && dx = 0) || (dy = -2 && dx = 0)
+      # (dx = 0 && dy = 1) || (dx = 0 && dy = 2)
     # end
    # elsif normal move
     # if black
-      # (dy = 1 && dx = 0)
+      # (dx = 0 && dy = -1)
     # else white
-      # (dy = -1 && dx = 0)
+      # (dx = 0 && dy = 1)
     # end
   # else attack move
     # if black
-      # (dy = 1 && dx.abs = 1)
+      # (dx.abs = 1 && dy = -1)
     # else white
-      # (dy = -1 && dx.abs = 1)
+      # (dx.abs = 1 && dy = 1)
     # end
   end
 end
@@ -133,26 +126,26 @@ class Board
     #fill the board using [y][x]
     #y is the row and x is the column
     (0..7).each do |x|
-      @board[1][x] = Pawn.new( "black")
-      @board[6][x] = Pawn.new( "white")
+      @board[x][1] = Pawn.new( "black")
+      @board[x][6] = Pawn.new( "white")
     end
 
     @board[0][0] = Rook.new("black")
-    @board[0][1] = Knight.new("black")
-    @board[0][2] = Bishop.new("black")
-    @board[0][3] = Queen.new( "black")
-    @board[0][4] = King.new( "black")
-    @board[0][5] = Bishop.new( "black")
-    @board[0][6] = Knight.new( "black")
-    @board[0][7] = Rook.new( "black")
+    @board[1][0] = Knight.new("black")
+    @board[2][0] = Bishop.new("black")
+    @board[3][0] = Queen.new( "black")
+    @board[4][0] = King.new( "black")
+    @board[5][0] = Bishop.new( "black")
+    @board[6][0] = Knight.new( "black")
+    @board[7][0] = Rook.new( "black")
 
-    @board[7][0] = Rook.new( "white")
-    @board[7][1] = Knight.new( "white")
-    @board[7][2] = Bishop.new( "white")
-    @board[7][3] = King.new( "white")
-    @board[7][4] = Queen.new( "white")
-    @board[7][5] = Bishop.new( "white")
-    @board[7][6] = Knight.new( "white")
+    @board[0][7] = Rook.new( "white")
+    @board[1][7] = Knight.new( "white")
+    @board[2][7] = Bishop.new( "white")
+    @board[3][7] = King.new( "white")
+    @board[4][7] = Queen.new( "white")
+    @board[5][7] = Bishop.new( "white")
+    @board[6][7] = Knight.new( "white")
     @board[7][7] = Rook.new( "white")
   end
 
