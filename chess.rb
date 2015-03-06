@@ -1,5 +1,7 @@
 class Piece
-  def initialize(location, state, move_pattern, args={})
+  attr_reader :state
+  def initialize(location, state, move_pattern, args={}) # pass board in as argument
+    # use @board so that pieces are aware of board methods
     @location = location
     @state = state
     @move_pattern = move_pattern
@@ -14,21 +16,20 @@ class Piece
 
   def move(row,col)
     if valid_move?
-      if cell_empty?(row,col)
+      if @board.cell_empty?(row,col)
         @location = [row,col]
-      elsif
-    # if @move_pattern == [@location[0] - row, @location[1] - col].map { |el| el.abs}
-    #   return row,col
+      elsif victim_capturable?(row,col)
+        @location = [row,col]
+      end
     end
-    return @location
   end
 
   def victim_capturable?(victim_state)
     @state == victim_state
-    #board asks self state
-    #compares to state of attacking piece
-    #if self.state != attacking_piece.state
-    #return true
+  end
+
+  def to_s
+
   end
 
 end
