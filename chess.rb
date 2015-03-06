@@ -129,7 +129,12 @@ end
 #user will provide letter+y-value via gets
 #split letter and y-value
 #convert letter to x-value
-letter_to_x_value = {
+
+puts @board
+
+class Board
+  def initialize
+  @letter_to_x_value = {
                   "A" => 0,
                   "B" => 1,
                   "C" => 2,
@@ -139,63 +144,82 @@ letter_to_x_value = {
                   "G" => 6,
                   "H" => 7
                   }
+  @board = {
+      {0 => 7} => Rook.new("black"),
+      {1 => 7} => Knight.new("black"),
+      {2 => 7} => Bishop.new("black"),
+      {3 => 7} => Queen.new("black"),
+      {4 => 7} => King.new("black"),
+      {5 => 7} => Bishop.new("black"),
+      {6 => 7} => Knight.new("black"),
+      {7 => 7} => Rook.new("black"),
 
-@board = {
-    {0 => 0} => Rook.new("black"), #add x_location, y_location
-    {1 => 0} => Knight.new("black"),   #add x_location, y_location
-    {2 => 0} => Bishop.new("black"), #add x_location, y_location
-    {3 => 0} => Queen.new( "black"), #add x_location, y_location
-    {4 => 0} => King.new( "black"), #add x_location, y_location
-    {5 => 0} => Bishop.new( "black"), #add x_location, y_location
-    {6 => 0} => Knight.new( "black"), #add x_location, y_location
-    {7 => 0} => Rook.new( "black")
-}
-  #add x_location, y_location
+      {0 => 6} => Pawn.new("black"),
+      {1 => 6} => Pawn.new("black"),
+      {2 => 6} => Pawn.new("black"),
+      {3 => 6} => Pawn.new("black"),
+      {4 => 6} => Pawn.new("black"),
+      {5 => 6} => Pawn.new("black"),
+      {6 => 6} => Pawn.new("black"),
+      {7 => 6} => Pawn.new("black"),
 
-    # @board[0][7] = Rook.new( "white") #add x_location, y_location
-    # @board[1][7] = Knight.new( "white") #add x_location, y_location
-    # @board[2][7] = Bishop.new( "white") #add x_location, y_location
-    # @board[3][7] = King.new( "white") #add x_location, y_location
-    # @board[4][7] = Queen.new( "white") #add x_location, y_location
-    # @board[5][7] = Bishop.new( "white") #add x_location, y_location
-    # @board[6][7] = Knight.new( "white") #add x_location, y_location
-    # @board[7][7] = Rook.new( "white") #add x_location, y_location
+      {0 => 5} => nil,
+      {1 => 5} => nil,
+      {2 => 5} => nil,
+      {3 => 5} => nil,
+      {4 => 5} => nil,
+      {5 => 5} => nil,
+      {6 => 5} => nil,
+      {7 => 5} => nil,
 
-p @board
+      {0 => 4} => nil,
+      {1 => 4} => nil,
+      {2 => 4} => nil,
+      {3 => 4} => nil,
+      {4 => 4} => nil,
+      {5 => 4} => nil,
+      {6 => 4} => nil,
+      {7 => 4} => nil,
 
+      {0 => 3} => nil,
+      {1 => 3} => nil,
+      {2 => 3} => nil,
+      {3 => 3} => nil,
+      {4 => 3} => nil,
+      {5 => 3} => nil,
+      {6 => 3} => nil,
+      {7 => 3} => nil,
 
+      {0 => 2} => nil,
+      {1 => 2} => nil,
+      {2 => 2} => nil,
+      {3 => 2} => nil,
+      {4 => 2} => nil,
+      {5 => 2} => nil,
+      {6 => 2} => nil,
+      {7 => 2} => nil,
 
-class Board
-  attr_reader :width, :height
+      {0 => 1} => Pawn.new("white"),
+      {1 => 1} => Pawn.new("white"),
+      {2 => 1} => Pawn.new("white"),
+      {3 => 1} => Pawn.new("white"),
+      {4 => 1} => Pawn.new("white"),
+      {5 => 1} => Pawn.new("white"),
+      {6 => 1} => Pawn.new("white"),
+      {7 => 1} => Pawn.new("white"),
 
-  def initialize(height = 8, width = 8)
-    @height, @width = height, width
-    @board = Array.new(height) {Array.new(width)}
+      {0 => 0} => Rook.new("white"),
+      {1 => 0} => Knight.new("white"),
+      {2 => 0} => Bishop.new("white"),
+      {3 => 0} => Queen.new("white"),
+      {4 => 0} => King.new("white"),
+      {5 => 0} => Bishop.new("white"),
+      {6 => 0} => Knight.new("white"),
+      {7 => 0} => Rook.new("white")
+  }
 
-    #fill the board using [y][x]
-    #y is the row and x is the column
-    (0..7).each do |x|
-      @board[x][1] = Pawn.new( "black") #add x_location, y_location
-      @board[x][6] = Pawn.new( "white") #add x_location, y_location
-    end
+  p @board.values.first
 
-    # @board[0][0] = Rook.new("black") #add x_location, y_location
-    # @board[1][0] = Knight.new("black") #add x_location, y_location
-    # @board[2][0] = Bishop.new("black") #add x_location, y_location
-    # @board[3][0] = Queen.new( "black") #add x_location, y_location
-    # @board[4][0] = King.new( "black") #add x_location, y_location
-    # @board[5][0] = Bishop.new( "black") #add x_location, y_location
-    # @board[6][0] = Knight.new( "black") #add x_location, y_location
-    # @board[7][0] = Rook.new( "black") #add x_location, y_location
-
-    @board[0][7] = Rook.new( "white") #add x_location, y_location
-    @board[1][7] = Knight.new( "white") #add x_location, y_location
-    @board[2][7] = Bishop.new( "white") #add x_location, y_location
-    @board[3][7] = King.new( "white") #add x_location, y_location
-    @board[4][7] = Queen.new( "white") #add x_location, y_location
-    @board[5][7] = Bishop.new( "white") #add x_location, y_location
-    @board[6][7] = Knight.new( "white") #add x_location, y_location
-    @board[7][7] = Rook.new( "white") #add x_location, y_location
   end
 
     #set a width(8) and a height(8)
@@ -236,4 +260,4 @@ class Game
   end
 end
 
-# board = Board.new
+board = Board.new
