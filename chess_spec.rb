@@ -96,6 +96,26 @@ describe 'Board' do
       #TODO: create board attribute reader which is the board as 2d array
       expect(new_board.board.length).to eq(8)
       new_board.board.each {|row| expect(row.length).to eq(8)}
+    end
+  end
+
+  describe '#cell_empty?' do
+    it "is defined" do
+      expect(Board.method_defined?(:cell_empty?)).to eq(true)
+    end
+
+    it "has one argument" do
+      expect(Board.instance_method(:cell_empty?).arity).to eq(1)
+    end
+
+    it "returns false when a piece is there" do
+      expect(new_board.cell_empty?([0,0])).to eq(false)
+    end
+
+    it "returns true when a piece is not there" do
+      expect(new_board.cell_empty?([2,0])).to eq(true)
+    end
+  end
 end
 
 # TODO: logic of capture
