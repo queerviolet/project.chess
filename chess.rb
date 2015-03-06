@@ -117,3 +117,39 @@ class Game
     # if NO, return "invalid move"
   end
 end
+
+
+# ----------------------------------------------------------------------------------
+
+
+class Board
+attr_accessor :board, :captured_pieces
+  def initialize
+    @board = [["♜""♞""♝""♛""♚""♝""♞""♜"],
+    ["♟"*8],
+    [" "*8],
+    [" "*8],
+    [" "*8],
+    [" "*8],
+    ["♙"*8],
+    ["♖""♘""♗""♕""♔""♗""♘""♖"]].split("")
+    @captured_pieces = []
+  end
+
+  def cell_empty?(y,x)
+    @board[y][x] == " "
+  end
+
+  def remove(y,x)
+    @board[y][x] = " "
+  end
+
+  def send_piece(y,x)
+    @captured_pieces << @board[y][x]
+  end
+
+  def update_board
+    #scans every piece's new location and updates on board
+  end
+
+end
