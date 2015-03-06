@@ -40,7 +40,7 @@ describe 'Piece' do
     end
 
     # the argument is an array of the possible location of the piece
-    it 'has two arguments' do
+    it 'has two arguments: row and col' do
       expect(Piece.instance_method(:move).arity).to eq(2)
     end
     #changed format of argument for Board methods that handle
@@ -50,7 +50,7 @@ describe 'Piece' do
     end
 
     it 'cannot move to new coordinates' do
-      expect(white_piece1.move(9,9)).to eq(0,0)
+      expect(white_piece1.move(9,9)).to eq([0,0])
     end
   end
 
@@ -61,11 +61,12 @@ describe 'Piece' do
     end
 
     # argument is the attacker's state on the victim piece
-    it 'has one argument' do
-      expect(Piece.instance_method(:capturable?)).to eq(1)
+    it 'has one argument: state' do
+      expect(Piece.instance_method(:capturable?).arity).to eq(1)
     end
 
     it 'is getting captured' do
+      dumb_board = [[]]
       expect(white_piece1.capturable?('black')).to eq(true)
     end
 
