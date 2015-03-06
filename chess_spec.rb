@@ -42,13 +42,14 @@ describe 'Piece' do
     it 'has one argument' do
       expect(Piece.instance_method(:move).arity).to eq(1)
     end
-
+    #changed format of argument for Board methods that handle
+    #cell location from array to 2 integer parameters
     it 'can move to new coordinates' do
-      expect(white_piece1.move([1,0])).to eq([1,0])
+      expect(white_piece1.move(1,0)).to eq(1,0)
     end
 
     it 'cannot move to new coordinates' do
-      expect(white_piece1.move([9,9])).to eq([0,0])
+      expect(white_piece1.move(9,9)).to eq(0,0)
     end
   end
 
@@ -79,7 +80,7 @@ describe 'Pawn' do
 
   describe '#move' do
     it "can't move backwards" do
-      expect(pawn_piece.move[4,0]).to eq([5,0])
+      expect(pawn_piece.move(4,0).to eq(5,0)
     end
 
 end
@@ -109,13 +110,30 @@ describe 'Board' do
     end
 
     it "returns false when a piece is there" do
-      expect(new_board.cell_empty?([0,0])).to eq(false)
+      expect(new_board.cell_empty?(0,0)).to eq(false)
     end
 
     it "returns true when a piece is not there" do
-      expect(new_board.cell_empty?([2,0])).to eq(true)
+      expect(new_board.cell_empty?(2,0)).to eq(true)
     end
+
   end
+
+    describe '#remove' do
+      it "has one argument" do
+      expect(Board.instance_method(:remove).arity).to eq(1)
+      end
+
+      it "changes a filled cell to an empty cell" do
+        expect(new_board.remove(0,5)).to eq(" "))
+
+        describe
+    end
+
+
+
+  end
+
 end
 
 # TODO: logic of capture
