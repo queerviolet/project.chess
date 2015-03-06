@@ -140,7 +140,7 @@ class Pawn < Piece
     end_y = end_coordinates[1]
     dx = end_x - @start_x
     dy = end_y - @start_y
-    ((dx == 0 && dy == -1) if @color == "black") || ((dx == 0 && dy == 1) if @color == "white")
+    ((dx == 0 && dy == -1) && @color == "black") || ((dx == 0 && dy == 1) && @color == "white")
 
    # if move counter == 1
     # if black

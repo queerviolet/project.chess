@@ -116,6 +116,7 @@ describe 'Pawn' do
     expect(pawn.valid?({ 4 => 5 })).to eq(true)
   end
 
+#why does the black pawn return nil?
   it 'has valid? method which returns false' do
     expect(pawn.valid?({ 5 => 6 })).to eq(false)
   end
