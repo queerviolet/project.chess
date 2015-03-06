@@ -16,6 +16,7 @@ class Board
                   "G" => 6,
                   "H" => 7
                   }
+
   @board = {
       {0 => 7} => Rook.new({0 => 7}, "black"),
       {1 => 7} => Knight.new({1 => 7},"black"),
@@ -89,15 +90,21 @@ class Board
       {6 => 0} => Knight.new({6 => 0},"white"),
       {7 => 0} => Rook.new({7 => 0},"white")
   }
+
+  @piece = Piece.new(@board)
+
   end
+
+
 
 end
 
 class Piece
-  def initialize
-    #@type = type (pawn, rook, knight, queen, bishop, king)
+  attr_reader :board
+  def initialize(board)
     #@available_paths(@type)
     #@color (white or black)
+    @board = board
   end
 
 end
@@ -121,6 +128,7 @@ class Rook < Piece
     dy = end_y - @start_y
     (dx.abs <= 7 && dy == 0) || (dx == 0 && dy.abs <= 7)
   end
+
 end
 
 class Knight < Piece
@@ -239,3 +247,7 @@ end
 #convert letter to x-value
 
 board = Board.new
+piece = Piece.new(board.board)
+p piece.board
+
+
