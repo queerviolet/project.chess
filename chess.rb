@@ -126,6 +126,43 @@ end
 #  (Piece) If valid, will reset location to new location
 
 
+#user will provide letter+y-value via gets
+#split letter and y-value
+#convert letter to x-value
+letter_to_x_value = {
+                  "A" => 0,
+                  "B" => 1,
+                  "C" => 2,
+                  "D" => 3,
+                  "E" => 4,
+                  "F" => 5,
+                  "G" => 6,
+                  "H" => 7
+                  }
+
+@board = {
+    {0 => 0} => Rook.new("black"), #add x_location, y_location
+    {1 => 0} => Knight.new("black"),   #add x_location, y_location
+    {2 => 0} => Bishop.new("black"), #add x_location, y_location
+    {3 => 0} => Queen.new( "black"), #add x_location, y_location
+    {4 => 0} => King.new( "black"), #add x_location, y_location
+    {5 => 0} => Bishop.new( "black"), #add x_location, y_location
+    {6 => 0} => Knight.new( "black"), #add x_location, y_location
+    {7 => 0} => Rook.new( "black")
+}
+  #add x_location, y_location
+
+    # @board[0][7] = Rook.new( "white") #add x_location, y_location
+    # @board[1][7] = Knight.new( "white") #add x_location, y_location
+    # @board[2][7] = Bishop.new( "white") #add x_location, y_location
+    # @board[3][7] = King.new( "white") #add x_location, y_location
+    # @board[4][7] = Queen.new( "white") #add x_location, y_location
+    # @board[5][7] = Bishop.new( "white") #add x_location, y_location
+    # @board[6][7] = Knight.new( "white") #add x_location, y_location
+    # @board[7][7] = Rook.new( "white") #add x_location, y_location
+
+p @board
+
 
 
 class Board
@@ -142,14 +179,14 @@ class Board
       @board[x][6] = Pawn.new( "white") #add x_location, y_location
     end
 
-    @board[0][0] = Rook.new("black") #add x_location, y_location
-    @board[1][0] = Knight.new("black") #add x_location, y_location
-    @board[2][0] = Bishop.new("black") #add x_location, y_location
-    @board[3][0] = Queen.new( "black") #add x_location, y_location
-    @board[4][0] = King.new( "black") #add x_location, y_location
-    @board[5][0] = Bishop.new( "black") #add x_location, y_location
-    @board[6][0] = Knight.new( "black") #add x_location, y_location
-    @board[7][0] = Rook.new( "black") #add x_location, y_location
+    # @board[0][0] = Rook.new("black") #add x_location, y_location
+    # @board[1][0] = Knight.new("black") #add x_location, y_location
+    # @board[2][0] = Bishop.new("black") #add x_location, y_location
+    # @board[3][0] = Queen.new( "black") #add x_location, y_location
+    # @board[4][0] = King.new( "black") #add x_location, y_location
+    # @board[5][0] = Bishop.new( "black") #add x_location, y_location
+    # @board[6][0] = Knight.new( "black") #add x_location, y_location
+    # @board[7][0] = Rook.new( "black") #add x_location, y_location
 
     @board[0][7] = Rook.new( "white") #add x_location, y_location
     @board[1][7] = Knight.new( "white") #add x_location, y_location
@@ -199,4 +236,4 @@ class Game
   end
 end
 
-p board = Board.new
+# board = Board.new
