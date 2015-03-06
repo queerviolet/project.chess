@@ -8,10 +8,17 @@ class Piece
     @can_reverse = args.fetch(:can_reverse, true)
   end
 
-  def move(row,col)
-    if @move_pattern == [@location[0] - row, @location[1] - col].map { |el| el.abs}
+  def valid_move?(row,col)
+    @move_pattern == [@location[0] - row, @location[1] - col].map { |el| el.abs}
+  end
 
-      return row,col
+  def move(row,col)
+    if valid_move?
+      if cell_empty?(row,col)
+        @location = [row,col]
+      elsif
+    # if @move_pattern == [@location[0] - row, @location[1] - col].map { |el| el.abs}
+    #   return row,col
     end
     return @location
   end
