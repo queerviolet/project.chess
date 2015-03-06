@@ -122,8 +122,8 @@ end
 #   end
 
 #     describe '#remove' do
-#       it "has one argument" do
-#       expect(Board.instance_method(:remove).arity).to eq(1)
+#       it "has two arguments: row and col" do
+#       expect(Board.instance_method(:remove).arity).to eq(2)
 #       end
 
 #       it "changes a filled cell to an empty cell" do
