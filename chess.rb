@@ -23,6 +23,7 @@ class Piece
 
 end
 
+# add module or to class the coordinate comparison
 class Rook < Piece
   attr_reader :position, :color
   def initialize(position, color)
@@ -31,7 +32,6 @@ class Rook < Piece
     start_coordinates = position.first
     @start_x = start_coordinates[0]
     @start_y = start_coordinates[1]
-
   end
 
   def valid?(play)
@@ -45,8 +45,13 @@ class Rook < Piece
 end
 
 class Knight < Piece
+  attr_reader :position, :color
   def initialize(position, color)
     @color = color
+    @position = position
+    start_coordinates = position.first
+    @start_x = start_coordinates[0]
+    @start_y = start_coordinates[1]
   end
 
   def valid?(play)
@@ -60,8 +65,13 @@ class Knight < Piece
 end
 
 class Bishop < Piece
+  attr_reader :position, :color
   def initialize(position, color)
     @color = color
+    @position = position
+    start_coordinates = position.first
+    @start_x = start_coordinates[0]
+    @start_y = start_coordinates[1]
   end
 
   def valid?(play)
@@ -75,9 +85,13 @@ class Bishop < Piece
 end
 
 class Queen < Piece
+  attr_reader :position, :color
   def initialize(position, color)
     @color = color
-
+    @position = position
+    start_coordinates = position.first
+    @start_x = start_coordinates[0]
+    @start_y = start_coordinates[1]
   end
 
   def valid?(play)
@@ -91,8 +105,13 @@ class Queen < Piece
 end
 
 class King < Piece
+  attr_reader :position, :color
   def initialize(position, color)
     @color = color
+    @position = position
+    start_coordinates = position.first
+    @start_x = start_coordinates[0]
+    @start_y = start_coordinates[1]
   end
 
   def valid?(play)
@@ -106,8 +125,13 @@ class King < Piece
 end
 
 class Pawn < Piece
+  attr_reader :position, :color
   def initialize(position, color)
     @color = color
+    @position = position
+    start_coordinates = position.first
+    @start_x = start_coordinates[0]
+    @start_y = start_coordinates[1]
   end
 
   def valid?(play)
@@ -116,10 +140,12 @@ class Pawn < Piece
     end_y = end_coordinates[1]
     dx = end_x - @start_x
     dy = end_y - @start_y
+    ((dx == 0 && dy == -1) if @color == "black") || ((dx == 0 && dy == 1) if @color == "white")
+
    # if move counter == 1
     # if black
       # (dx = 0 && dy = -1) || (dx = 0 && dy = -2)
-    # else white
+    # else whites
       # (dx = 0 && dy = 1) || (dx = 0 && dy = 2)
     # end
    # elsif normal move
@@ -151,8 +177,6 @@ end
 #user will provide letter+y-value via gets
 #split letter and y-value
 #convert letter to x-value
-
-puts @board
 
 class Board
   attr_accessor :board
@@ -296,3 +320,7 @@ rook = Rook.new({7 => 7}, "black")
 rook.valid?({6 => 7})
 rook.valid?({6 => 6})
 
+# pawn = Pawn.new({4 =>6 }, "black")
+# p pawn
+# pawn.valid?({ 4 => 5 })
+# pawn.valid?({ 5 => 6 })
