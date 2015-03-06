@@ -31,4 +31,13 @@ describe 'Rook' do
   it 'starts position and color' do
     expect(rook.color).to eq("black")
   end
+
+  it 'has valid? method which returns true' do
+    expect(rook.valid?({ 6=>7 })).to eq(true)
+  end
+
+  it 'has valid? method which returns false' do
+    expect(rook.valid?({ 6=>6 })).to eq(false)
+  end
+
 end

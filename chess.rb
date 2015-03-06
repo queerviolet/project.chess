@@ -23,79 +23,99 @@ class Piece
 
 end
 
-# pass current_position for current_y, current_x and where
-# they want to move it to move_position for move_x, move_y
 class Rook < Piece
   attr_reader :position, :color
-  def initialize(position, color) #add x_location, y_location
+  def initialize(position, color)
     @color = color
     @position = position
-    p @color, @position
+    start_coordinates = position.first
+    @start_x = start_coordinates[0]
+    @start_y = start_coordinates[1]
+
   end
 
-  def valid_move?(dx, dy)
-    (dx.abs >= 7 && dy = 0) || (dx = 0 && dy.abs >= 7)
+  def valid?(play)
+    end_coordinates = play.first
+    end_x = end_coordinates[0]
+    end_y = end_coordinates[1]
+    dx = end_x - @start_x
+    dy = end_y - @start_y
+    (dx.abs <= 7 && dy == 0) || (dx == 0 && dy.abs <= 7)
   end
 end
 
-# pass current_position for current_y, current_x and where
-# they want to move it to move_position for move_x, move_y
 class Knight < Piece
-  def initialize(position, color) #add x_location, y_location
+  def initialize(position, color)
     @color = color
-   # possible_moves from [y][x]= [y+1][x-2], [y-1][x-2], [y+1][x+2], [y-1][x+2], [y+2][x-1], [y-2][x-1], [y+2][x+1], [y-2][x+1]
   end
 
-  def valid_move?(dx, dy)
-    (dx.abs = 2 && dy.abs = 1) || (dx.abs = 1 && dy.abs = 2)
+  def valid?(play)
+    end_coordinates = play.first
+    end_x = end_coordinates[0]
+    end_y = end_coordinates[1]
+    dx = end_x - @start_x
+    dy = end_y - @start_y
+    (dx.abs == 2 && dy.abs == 1) || (dx.abs == 1 && dy.abs == 2)
   end
 end
 
-# pass current_position for current_y, current_x and where
-# they want to move it to move_position for move_x, move_y
 class Bishop < Piece
-  def initialize(position, color) #add x_location, y_location
+  def initialize(position, color)
     @color = color
   end
 
-  def valid_move?(dx, dy)
-    dx.abs = dy.abs
+  def valid?(play)
+    end_coordinates = play.first
+    end_x = end_coordinates[0]
+    end_y = end_coordinates[1]
+    dx = end_x - @start_x
+    dy = end_y - @start_y
+    dx.abs == dy.abs
   end
 end
 
-# pass current_position for current_y, current_x and where
-# they want to move it to move_position for move_x, move_y
 class Queen < Piece
-  def initialize(position, color) #add x_location, y_location
+  def initialize(position, color)
     @color = color
 
   end
 
-  def valid_move?(dx, dy)
-    (dx.abs = dy.abs) || (dx.abs >= 7 && dy = 0) || (dx = 0 && dy.abs >= 7)
+  def valid?(play)
+    end_coordinates = play.first
+    end_x = end_coordinates[0]
+    end_y = end_coordinates[1]
+    dx = end_x - @start_x
+    dy = end_y - @start_y
+    (dx.abs == dy.abs) || (dx.abs <= 7 && dy == 0) || (dx == 0 && dy.abs <= 7)
   end
 end
 
-# pass current_position for current_y, current_x and where
-# they want to move it to move_position for move_x, move_y
 class King < Piece
-  def initialize(position, color) #add x_location, y_location
+  def initialize(position, color)
     @color = color
   end
 
-  def valid_move?(dx, dy)
-    (dx.abs = dy.abs = 1) || (dx = 0 && dy.abs = 1) || (dx.abs = 1 && dy = 0)
+  def valid?(play)
+    end_coordinates = play.first
+    end_x = end_coordinates[0]
+    end_y = end_coordinates[1]
+    dx = end_x - @start_x
+    dy = end_y - @start_y
+    (dx.abs == 1 && dy.abs == 1) || (dx == 0 && dy.abs == 1) || (dx.abs == 1 && dy == 0)
   end
 end
 
-# pass current_position for current_y, current_x and where
-# they want to move it to move_position for move_x, move_y
 class Pawn < Piece
-  def initialize(position, color) #add x_location, y_location
+  def initialize(position, color)
     @color = color
   end
 
-  def valid_move?(dx, dy)
+  def valid?(play)
+    end_coordinates = play.first
+    end_x = end_coordinates[0]
+    end_y = end_coordinates[1]
+    dx = end_x - @start_x
+    dy = end_y - @start_y
    # if move counter == 1
     # if black
       # (dx = 0 && dy = -1) || (dx = 0 && dy = -2)
@@ -221,12 +241,13 @@ class Board
       {7 => 0} => Rook.new({7 => 0},"white")
   }
 
-  p @board.values.first
-  p @board
-  p @board[{7 => 7}].color
+  # p @board.values.first
+  # p @board
+  # p @board[{7 => 7}].valid?({7 => 6})
+
 
   # @board.map do |ele|
-  # p  ele[0]
+  # p  ele[0][0]
   # end
 
   end
@@ -270,4 +291,8 @@ class Game
 end
 
 board = Board.new
+
+rook = Rook.new({7 => 7}, "black")
+rook.valid?({6 => 7})
+rook.valid?({6 => 6})
 
