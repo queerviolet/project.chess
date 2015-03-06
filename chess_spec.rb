@@ -19,7 +19,7 @@ describe 'Piece' do
   let(:white_piece1) { Piece.new([0,0], 'white', [1,0]) }
   let(:white_piece2) { Piece.new([0,1], 'white', []) }
   let(:black_piece1) { Piece.new([7,0], 'black', []) }
-end
+# end
   #input:
   #  location - this is where the piece is set originally
   #  state - what colour is this piece
@@ -34,46 +34,46 @@ end
   #   end
   # end
 
-#   describe '#move' do
-#     it 'is defined' do
-#       expect(Piece.method_defined?(:move)).to eq(true)
-#     end
+  describe '#move' do
+    it 'is defined' do
+      expect(Piece.method_defined?(:move)).to eq(true)
+    end
 
-#     # the argument is an array of the possible location of the piece
-#     it 'has one argument' do
-#       expect(Piece.instance_method(:move).arity).to eq(1)
-#     end
-#     #changed format of argument for Board methods that handle
-#     #cell location from array to 2 integer parameters
-#     it 'can move to new coordinates' do
-#       expect(white_piece1.move(1,0)).to eq(1,0)
-#     end
+    # the argument is an array of the possible location of the piece
+    it 'has two arguments' do
+      expect(Piece.instance_method(:move).arity).to eq(2)
+    end
+    #changed format of argument for Board methods that handle
+    #cell location from array to 2 integer parameters
+    it 'can move to new coordinates' do
+      expect(white_piece1.move(1,0)).to eq([1,0])
+    end
 
-#     it 'cannot move to new coordinates' do
-#       expect(white_piece1.move(9,9)).to eq(0,0)
-#     end
-#   end
+    it 'cannot move to new coordinates' do
+      expect(white_piece1.move(9,9)).to eq(0,0)
+    end
+  end
 
-#   # this is for the victim piece that may or may not be attacked
-#   describe '#capturable?' do
-#     it 'is defined' do
-#       expect(Piece.method_defined?(:capturable?)).to eq(true)
-#     end
+  # this is for the victim piece that may or may not be attacked
+  describe '#capturable?' do
+    it 'is defined' do
+      expect(Piece.method_defined?(:capturable?)).to eq(true)
+    end
 
-#     # argument is the attacker's state on the victim piece
-#     it 'has one argument' do
-#       expect(Piece.instance_method(:capturable?)).to eq(1)
-#     end
+    # argument is the attacker's state on the victim piece
+    it 'has one argument' do
+      expect(Piece.instance_method(:capturable?)).to eq(1)
+    end
 
-#     it 'is getting captured' do
-#       expect(white_piece1.capturable?('black')).to eq(true)
-#     end
+    it 'is getting captured' do
+      expect(white_piece1.capturable?('black')).to eq(true)
+    end
 
-#     it 'is not getting captured' do
-#       expect(white_piece1.capturable?('white')).to eq(false)
-#     end
-#   end
-# end
+    it 'is not getting captured' do
+      expect(white_piece1.capturable?('white')).to eq(false)
+    end
+  end
+end
 
 # describe 'Pawn' do
 

@@ -1,5 +1,5 @@
 class Piece
-  def initialize(location, state, move_pattern, args)
+  def initialize(location, state, move_pattern, args={})
     @location = location
     @state = state
     @move_pattern = move_pattern
@@ -9,12 +9,13 @@ class Piece
   end
 
   def move(row,col)
-    if @move_pattern == [@location[0] - row, @location[1] - col].abs
-      return [row,col]
+    if @move_pattern == [@location[0] - row, @location[1] - col].map { |el| el.abs}
+      return row,col
     end
     return @location
   end
 
 end
 
-
+# test_piece = Piece.new([0,0], "black", [1,0])
+# p test_piece.move(1,0)
