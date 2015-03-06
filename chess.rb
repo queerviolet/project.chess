@@ -4,22 +4,6 @@ class Piece
     #@available_paths(@type)
     #@color (white or black)
   end
-# making case statement for pieces by type
-
-  def self.make
-
-  end
-
-  def available_path
-    #case statement depending on type of piece
-    #queen can move in any direction (up to 8 spaces)
-    #king can move in any direction (one space) at a time
-    #pawn can move forward one space (1 or 2 on first move)
-    #knight can move x or y in any direction (8 directions)
-    #bishop can move on any diagonal (4 directions)
-    #rook can move vertically or horizontally(4 directions) any distance
-    #stops at own piece
-  end
 
 end
 
@@ -141,25 +125,6 @@ class Pawn < Piece
     dx = end_x - @start_x
     dy = end_y - @start_y
     ((dx == 0 && dy == -1) && @color == "black") || ((dx == 0 && dy == 1) && @color == "white")
-
-   # if move counter == 1
-    # if black
-      # (dx = 0 && dy = -1) || (dx = 0 && dy = -2)
-    # else whites
-      # (dx = 0 && dy = 1) || (dx = 0 && dy = 2)
-    # end
-   # elsif normal move
-    # if black
-      # (dx = 0 && dy = -1)
-    # else white
-      # (dx = 0 && dy = 1)
-    # end
-  # else attack move
-    # if black
-      # (dx.abs = 1 && dy = -1)
-    # else white
-      # (dx.abs = 1 && dy = 1)
-    # end
   end
 end
 
