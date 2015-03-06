@@ -90,6 +90,12 @@ end
 
 describe 'Board' do
 
+  let(:new_board) { Board.new }
+  describe '#initialize' do
+    it 'is a nested array of eight sub-arrays, each with eight elements' do
+      #TODO: create board attribute reader which is the board as 2d array
+      expect(new_board.board.length).to eq(8)
+      new_board.board.each {|row| expect(row.length).to eq(8)}
 end
 
 # TODO: logic of capture
