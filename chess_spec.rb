@@ -17,10 +17,18 @@ describe 'Board' do
 
   it 'has a clear method which removes all pieces' do
     board.clear
-    expect(board.pieces.empty?). to equal(true)
+    expect(board.pieces.empty?).to equal(true)
   end
 
   it 'has thirty-two empty slots that are equal to nil' do
     expect(board.pieces.empty?).to equal(32)
+  end
+end
+
+describe 'Rook' do
+  let (:rook) { Rook.new({7 => 7}, "black") }
+
+  it 'starts position and color' do
+    expect(rook.color).to eq("black")
   end
 end

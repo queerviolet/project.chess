@@ -26,9 +26,11 @@ end
 # pass current_position for current_y, current_x and where
 # they want to move it to move_position for move_x, move_y
 class Rook < Piece
-# include Movement
-  def initialize(color) #add x_location, y_location
+  attr_reader :position, :color
+  def initialize(position, color) #add x_location, y_location
     @color = color
+    @position = position
+    p @color, @position
   end
 
   def valid_move?(dx, dy)
@@ -39,7 +41,7 @@ end
 # pass current_position for current_y, current_x and where
 # they want to move it to move_position for move_x, move_y
 class Knight < Piece
-  def initialize(color) #add x_location, y_location
+  def initialize(position, color) #add x_location, y_location
     @color = color
    # possible_moves from [y][x]= [y+1][x-2], [y-1][x-2], [y+1][x+2], [y-1][x+2], [y+2][x-1], [y-2][x-1], [y+2][x+1], [y-2][x+1]
   end
@@ -52,7 +54,7 @@ end
 # pass current_position for current_y, current_x and where
 # they want to move it to move_position for move_x, move_y
 class Bishop < Piece
-  def initialize(color) #add x_location, y_location
+  def initialize(position, color) #add x_location, y_location
     @color = color
   end
 
@@ -64,7 +66,7 @@ end
 # pass current_position for current_y, current_x and where
 # they want to move it to move_position for move_x, move_y
 class Queen < Piece
-  def initialize(color) #add x_location, y_location
+  def initialize(position, color) #add x_location, y_location
     @color = color
 
   end
@@ -77,7 +79,7 @@ end
 # pass current_position for current_y, current_x and where
 # they want to move it to move_position for move_x, move_y
 class King < Piece
-  def initialize(color) #add x_location, y_location
+  def initialize(position, color) #add x_location, y_location
     @color = color
   end
 
@@ -89,7 +91,7 @@ end
 # pass current_position for current_y, current_x and where
 # they want to move it to move_position for move_x, move_y
 class Pawn < Piece
-  def initialize(color) #add x_location, y_location
+  def initialize(position, color) #add x_location, y_location
     @color = color
   end
 
@@ -133,6 +135,7 @@ end
 puts @board
 
 class Board
+  attr_accessor :board
   def initialize
   @letter_to_x_value = {
                   "A" => 0,
@@ -145,23 +148,23 @@ class Board
                   "H" => 7
                   }
   @board = {
-      {0 => 7} => Rook.new("black"),
-      {1 => 7} => Knight.new("black"),
-      {2 => 7} => Bishop.new("black"),
-      {3 => 7} => Queen.new("black"),
-      {4 => 7} => King.new("black"),
-      {5 => 7} => Bishop.new("black"),
-      {6 => 7} => Knight.new("black"),
-      {7 => 7} => Rook.new("black"),
+      {0 => 7} => Rook.new({0 => 7}, "black"),
+      {1 => 7} => Knight.new({1 => 7},"black"),
+      {2 => 7} => Bishop.new({2 => 7},"black"),
+      {3 => 7} => Queen.new({3 => 7},"black"),
+      {4 => 7} => King.new({4 => 7},"black"),
+      {5 => 7} => Bishop.new({5 => 7},"black"),
+      {6 => 7} => Knight.new({6 => 7},"black"),
+      {7 => 7} => Rook.new({7 => 7}, "black"),
 
-      {0 => 6} => Pawn.new("black"),
-      {1 => 6} => Pawn.new("black"),
-      {2 => 6} => Pawn.new("black"),
-      {3 => 6} => Pawn.new("black"),
-      {4 => 6} => Pawn.new("black"),
-      {5 => 6} => Pawn.new("black"),
-      {6 => 6} => Pawn.new("black"),
-      {7 => 6} => Pawn.new("black"),
+      {0 => 6} => Pawn.new({0 => 6},"black"),
+      {1 => 6} => Pawn.new({1 => 6},"black"),
+      {2 => 6} => Pawn.new({2 => 6},"black"),
+      {3 => 6} => Pawn.new({3 => 6},"black"),
+      {4 => 6} => Pawn.new({4 => 6},"black"),
+      {5 => 6} => Pawn.new({5 => 6},"black"),
+      {6 => 6} => Pawn.new({6 => 6},"black"),
+      {7 => 6} => Pawn.new({7 => 6},"black"),
 
       {0 => 5} => nil,
       {1 => 5} => nil,
@@ -199,26 +202,32 @@ class Board
       {6 => 2} => nil,
       {7 => 2} => nil,
 
-      {0 => 1} => Pawn.new("white"),
-      {1 => 1} => Pawn.new("white"),
-      {2 => 1} => Pawn.new("white"),
-      {3 => 1} => Pawn.new("white"),
-      {4 => 1} => Pawn.new("white"),
-      {5 => 1} => Pawn.new("white"),
-      {6 => 1} => Pawn.new("white"),
-      {7 => 1} => Pawn.new("white"),
+      {0 => 1} => Pawn.new({0 => 1},"white"),
+      {1 => 1} => Pawn.new({1 => 1},"white"),
+      {2 => 1} => Pawn.new({2 => 1},"white"),
+      {3 => 1} => Pawn.new({3 => 1},"white"),
+      {4 => 1} => Pawn.new({4 => 1},"white"),
+      {5 => 1} => Pawn.new({5 => 1},"white"),
+      {6 => 1} => Pawn.new({6 => 1},"white"),
+      {7 => 1} => Pawn.new({7 => 1},"white"),
 
-      {0 => 0} => Rook.new("white"),
-      {1 => 0} => Knight.new("white"),
-      {2 => 0} => Bishop.new("white"),
-      {3 => 0} => Queen.new("white"),
-      {4 => 0} => King.new("white"),
-      {5 => 0} => Bishop.new("white"),
-      {6 => 0} => Knight.new("white"),
-      {7 => 0} => Rook.new("white")
+      {0 => 0} => Rook.new({0 => 0},"white"),
+      {1 => 0} => Knight.new({1 => 0},"white"),
+      {2 => 0} => Bishop.new({2 => 0},"white"),
+      {3 => 0} => Queen.new({3 => 0},"white"),
+      {4 => 0} => King.new({4 => 0},"white"),
+      {5 => 0} => Bishop.new({5 => 0},"white"),
+      {6 => 0} => Knight.new({6 => 0},"white"),
+      {7 => 0} => Rook.new({7 => 0},"white")
   }
 
   p @board.values.first
+  p @board
+  p @board[{7 => 7}].color
+
+  # @board.map do |ele|
+  # p  ele[0]
+  # end
 
   end
 
@@ -261,3 +270,4 @@ class Game
 end
 
 board = Board.new
+
