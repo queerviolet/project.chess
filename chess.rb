@@ -15,7 +15,7 @@ class Piece
   end
 
   def move(row,col)
-    if valid_move?
+    if valid_move?(row,col)
       if @board.cell_empty?(row,col)
         @location = [row,col]
       elsif victim_capturable?(row,col)
