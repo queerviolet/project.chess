@@ -10,7 +10,9 @@ class Piece
   end
 
   def valid_move?(row,col)
-    # @move_pattern[0]/@move_pattern[1] == [(@location[0] - row)/ (@location[1] - col)].abs
+    # @move_pattern.each do |dy, dx|
+    #   return
+    @move_pattern[0]/@move_pattern[1] == [(@location[0] - row)/ (@location[1] - col)].abs
   end
 
   def move(row,col)
@@ -24,19 +26,28 @@ end
 
 class Pawn < Piece
 
-
 end
 
 class Rook < Piece
+  def initialize
+    super(location, state, [[0,1], [1,0]], can_jump: true)
+  end
 
-end
-
-class Knight < Piece
   def valid_move?(row,col)
     (@move_pattern[0][0]/@move_pattern[0][1] == [(@location[0] - row)/ (@location[1] - col)].abs) ||
     (@move_pattern[1][0]/@move_pattern[1][1] == [(@location[0] - row)/ (@location[1] - col)].abs)
   end
+end
 
+class Knight < Piece
+  def initialize
+    super(location, state, [[2,1], [1,2]], can_jump: true)
+  end
+
+  def valid_move?(row,col)
+    (@move_pattern[0][0]/@move_pattern[0][1] == [(@location[0] - row)/ (@location[1] - col)].abs) ||
+    (@move_pattern[1][0]/@move_pattern[1][1] == [(@location[0] - row)/ (@location[1] - col)].abs)
+  end
 end
 
 class Bishop < Piece
@@ -48,7 +59,9 @@ class Queen < Piece
 end
 
 class King < Piece
-
+  def initialize
+    super(location, state, [[0,1], [1,0], [1,1]], can_jump: true)
+  end
 end
 ♟ = Pawn.new([0,0], "black", [1,0], can_reverse: false, capture_pattern: [1,1])
 p ♟.is_a?(Pawn)
