@@ -34,6 +34,10 @@ class Rook < Piece
 end
 
 class Knight < Piece
+  def valid_move?(row,col)
+    (@move_pattern[0][0]/@move_pattern[0][1] == [(@location[0] - row)/ (@location[1] - col)].abs) ||
+    (@move_pattern[1][0]/@move_pattern[1][1] == [(@location[0] - row)/ (@location[1] - col)].abs)
+  end
 
 end
 
