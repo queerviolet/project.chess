@@ -1,8 +1,6 @@
 class Piece
   attr_reader :state
-  def initialize(location, state, move_pattern, args={}) # pass board in as argument
-    # use current @board so that pieces are aware of board methods
-    # @board = board
+  def initialize(location, state, move_pattern, args={})
     @location = location
     @state = state
     @move_pattern = move_pattern
@@ -12,9 +10,9 @@ class Piece
   end
 
   def valid_move?(row,col)
-    @move_pattern[0]/@move_pattern[1] == [(@location[0] - row)/ (@location[1] - col)].abs
+    # @move_pattern[0]/@move_pattern[1] == [(@location[0] - row)/ (@location[1] - col)].abs
   end
-# board move may return to/call update_board, place_on_cell, and/or remove
+
   def move(row,col)
     @location = [row,col]
   end
