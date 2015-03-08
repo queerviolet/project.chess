@@ -153,7 +153,6 @@ class Game
       if move_validity == true
         if @board.cell_empty?(desired_row, desired_col) == false
         desired_cell_piece = @board[desired_row][desired_col]
-        p desired_cell_piece.is_a?(King)
     #     if piece.victim_capturable(desired_cell_piece.state)
     #       #capture victim
     #     else
@@ -168,12 +167,12 @@ class Game
     end
 end
 
-game = Game.new
-game.board[0][4] = King.new([0, 4], "black")
-game.board[1][2] = Knight.new([1, 2], "white")
+# game = Game.new
+# game.board[0][4] = King.new([0, 4], "black")
+# game.board[1][2] = Knight.new([1, 2], "white")
 # p game
 # # p game.strip_move(["b", 0])
-game.turn
+# game.turn
 # knight = Knight.new([1, 2], "white")
 # p knight.valid_move?(0, 4)
 # # ----------------------------------------------------------------------------------
@@ -182,15 +181,42 @@ game.turn
 class Board
 attr_accessor :board, :captured_pieces
   def initialize
-    @board = [["♜""♞""♝""♛""♚""♝""♞""♜"],
-    ["♟"*8],
-    [" "*8],
-    [" "*8],
-    [" "*8],
-    [" "*8],
-    ["♙"*8],
-    ["♖""♘""♗""♕""♔""♗""♘""♖"]].split("")
+   @board = [["♜","♞","♝","♛","♚","♝","♞","♜"],
+    ("♟"*8).split(""),
+    (" "*8).split(""),
+    (" "*8).split(""),
+    (" "*8).split(""),
+    (" "*8).split(""),
+    ("♙"*8).split(""),
+    ["♖","♘","♗","♕","♔","♗","♘","♖"]]
     @captured_pieces = []
+    @board[0][0] = Rook.new([0,0],'black')
+    @board[0][1] = Knight.new([0,1],'black')
+    # @board[0][2] = Bishop.new([0,2],'black')
+    # @board[0][3] = Queen.new([0,3],'black')
+    @board[0][4] = King.new([0,4],'black')
+    # @board[0][5] = Bishop.new([0,5],'black')
+    @board[0][6] = Knight.new([0,6],'black')
+    @board[0][7] = Rook.new([0,7],'black')
+    # @board[1].each do |cell|
+      # (0..7).each do |n|
+        # @board[1][cell] = Pawn.new([1,n],'black')
+      # end
+    # end
+
+    # @board[6].each do |cell|
+      # (0..7).each do |n|
+        # @board[1][cell] = Pawn.new([1,n],'white')
+      # end
+    # end
+    @board[7][0] = Rook.new([7,0],'white')
+    @board[7][1] = Knight.new([7,1],'white')
+    # @board[7][2] = Bishop.new([7,2],'white')
+    # @board[7][3] = Queen.new([7,3],'white')
+    @board[7][4] = King.new([7,4],'white')
+    # @board[7][5] = Bishop.new([7,5],'white')
+    @board[7][6] = Knight.new([7,6],'white')
+    @board[7][7] = Rook.new([7,7],'white')
   end
 
   def cell_empty?(y,x)
@@ -248,3 +274,5 @@ attr_accessor :board, :captured_pieces
   end
 
 end
+
+
