@@ -26,29 +26,46 @@ class Board
   attr_reader :pieces, :width, :height
 
   LAYOUT = [
-    [:♜, :♞, :♝, :♛, :♚, :♝, :♞, :♜,],
-    [:♟, :♟, :♟, :♟, :♟, :♟, :♟, :♟,],
-    [:_, :_, :_, :_, :_, :_, :_, :_,],
-    [:_, :_, :_, :_, :_, :_, :_, :_,],
-    [:_, :_, :_, :_, :_, :_, :_, :_,],
-    [:_, :_, :_, :_, :_, :_, :_, :_,],
-    [:♙, :♙, :♙, :♙, :♙, :♙, :♙, :♙,],
-    [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,],
-  ]
+      [:♜, :♞, :♝, :♛, :♚, :♝, :♞, :♜,],
+      [:♟, :♟, :♟, :♟, :♟, :♟, :♟, :♟,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:♙, :♙, :♙, :♙, :♙, :♙, :♙, :♙,],
+      [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,],
+    ]
 
-  def initialize(width=8, height=8, pieces=pieces)
+  # pieces is a hash of {[row:(0..7), col:(0..7)] => Chesspiece}
+  def initialize(width=8, height=8)
     @width, @height = width, height
     height = LAYOUT.length
     width = LAYOUT[0].length
-    pieces = {}
-    LAYOUT.each_with_index do |row, row_index|
-      row.each_with_index do |symbol, column_index|
-        if piece = Piece[symbol]
-          pieces[[row_index, column_index]] = piece
+    @pieces = {}
+    LAYOUT.each_with_index do |row, row_idx|
+      row.each_with_index do |sym, col_idx|
+        if piece = Piece[sym]
+          @pieces[[row_idx, col_idx]] = piece
         end
       end
     end
-    # p new(width, height, pieces)
+    @pieces.each { |pos, piece| piece.square = self[*pos] }
+  end
+
+  def [](row, col)
+    Square.new(self, row, col)
+  end
+
+  def to_s
+    (0..height - 1).map do |r|
+      (0..width - 1).map do |c|
+        if self[r, c].piece
+          " #{self[r, c].piece.symbol} "
+        else
+          "   "
+        end
+      end.join
+    end.join("\n")
   end
 
   def check_path
@@ -72,22 +89,33 @@ class Board
   def moves
 
   end
-
-  #Board returns the list of moves to Game
-  def to_s
-
-  end
  
 end
 
 class Square
-  attr_reader :board, :column, :row
-  def initialize(board, column, row)
-    @board, @column, @row = board, column, row
+  attr_reader :board, :row, :col
+  def initialize(board, row, col)
+    @board, @row, @col = board, row, col
   end
 
   def valid?
-    @row > 0 && @row < @board.height && @column > 0 && @column < @board.width
+    row > 0 && row < board.height && col > 0 && col < board.width
+  end
+
+  def piece
+    board.pieces[[row, col]]
+  end
+
+  def empty?
+    piece == nil
+  end
+
+  def +((dr, dc))
+    board[row + dr, col + dc]
+  end
+
+  def to_s
+    "#{('a'..'z').to_a[row]}#{board.height - col}"
   end
 
   def has_piece?
@@ -218,7 +246,7 @@ class King < Piece
   attr_reader:color
 
   symbols white: '♔', black: '♚'
-  
+
   def initialize(color)
     @color = color
   end
@@ -244,7 +272,8 @@ end
 
 # p square_A0 = Square.new(Board.new(8,8), 0, 0)
 # p square_A0.valid?
-p board = Board.new(8,8)
+board = Board.new
+puts board.pieces
 
 
 
