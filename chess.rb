@@ -50,9 +50,31 @@ class Board
       end
     end
     @pieces.each { |pos, piece| piece.square = self[*pos] }
-    @pieces.each do |piece|
-      p piece[0]
-    end
+  end
+
+  #Board finds the Piece at that square. If there is no 
+  #Piece at that square, or the Piece does not belong to
+  # user, Board replies to Game with an empty list of moves.
+  def find_piece(coordinates)
+    puts @pieces[coordinates]
+  end
+
+  def check_path
+    #  (Board) Will take start and end coordinates of move and will check path for validity
+    #  (Board) Calculate dx (end_x - start_x) and dy (end_x - start_x)
+  end
+
+  def update_board
+    #  (Board) If valid, will write over Board with new placement of specific piece
+  end
+
+  
+
+  #Game asks Board for moves for the user at the board_square
+  # Board filters the list of moves to only those which
+  #  are allowed given the current state of the board
+  def moves
+
   end
 
   def [](row, col)
@@ -71,27 +93,7 @@ class Board
     end.join("\n")
   end
 
-  def check_path
-    #  (Board) Will take start and end coordinates of move and will check path for validity
-    #  (Board) Calculate dx (end_x - start_x) and dy (end_x - start_x)
-  end
-
-  def update_board
-    #  (Board) If valid, will write over Board with new placement of specific piece
-  end
-
-  #Board finds the Piece at that square. If there is no 
-  #Piece at that square, or the Piece does not belong to
-  # user, Board replies to Game with an empty list of moves.
-  def find_piece(square)
-  end
-
-  #Game asks Board for moves for the user at the board_square
-  # Board filters the list of moves to only those which
-  #  are allowed given the current state of the board
-  def moves
-
-  end
+ 
  
 end
 
@@ -201,6 +203,18 @@ class Rook < Piece
     @color = color
   end
 
+  def moves
+    moves = []
+    (0..7).each do |x|
+      (0..7).each do |y|
+        [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
+          moves << [dx, dy]
+        end
+      end
+    end
+    return moves
+  end
+
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
 end
@@ -246,12 +260,16 @@ class Queen < Piece
 end
 
 class King < Piece
-  attr_reader:color
+  attr_reader :color
 
   symbols white: '♔', black: '♚'
 
   def initialize(color)
     @color = color
+  end
+
+  def moves
+    [[-1,0], [0,1], [1,0], [0,-1]]
   end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
@@ -274,6 +292,12 @@ class Pawn < Piece
 end
 
 board = Board.new
+board.find_piece([7,7])
+board.find_piece([1,2])
+board.find_piece([7,5])
+board.find_piece([6,6])
+p  king = King.new(:black).moves
+p  rook = Rook.new(:black).moves
 
 
 
