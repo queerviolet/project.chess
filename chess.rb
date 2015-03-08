@@ -36,7 +36,7 @@ class Board
     [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,],
   ]
 
-  def initialize(width=8, height=8)
+  def initialize(width=8, height=8, pieces=pieces)
     @width, @height = width, height
     height = LAYOUT.length
     width = LAYOUT[0].length
@@ -48,7 +48,7 @@ class Board
         end
       end
     end
-    p pieces
+    # p new(width, height, pieces)
   end
 
   def check_path
@@ -109,13 +109,33 @@ class Piece
   end
 
   def self.[](symbol)
-    type, color = SYMBOLS[symbol]
+    type, color = SYMBOLS[symbol]    
     return nil unless type
     type.new(color)
   end
 
-  def initialize(square)
-    @square = square
+  def initialize(color, square=nil)
+    @color, @square = color, square
+  end
+
+  def symbol
+    self.class::SYMBOLS[color]
+  end
+
+  def to_s
+    "#{symbol}#{pos}"
+  end
+
+  def describe
+    "#{color} #{self.class.to_s.downcase} #{to_s}"
+  end
+
+  def ride(step, min_steps=1, max_steps=nil)
+    steps = []
+    sq = square
+    while board.in_bounds?(p)
+
+    end
   end
 
   #  (Piece) If valid, will reset square to new square
@@ -143,6 +163,9 @@ end
 # add module or to class the coordinate comparison
 class Rook < Piece
   attr_reader :color
+
+  symbols white: '♖', black: '♜'
+
   def initialize(color)
     @color = color
   end
@@ -153,6 +176,9 @@ end
 
 class Knight < Piece
   attr_reader :color
+
+  symbols white: '♘', black: '♞'
+
   def initialize(color)
     @color = color
   end
@@ -164,6 +190,9 @@ end
 
 class Bishop < Piece
   attr_reader :color
+
+  symbols white: '♗', black: '♝'
+
   def initialize(color)
     @color = color
   end
@@ -174,6 +203,9 @@ end
 
 class Queen < Piece
   attr_reader :color
+
+  symbols white: '♕', black: '♛'
+
   def initialize(color)
     @color = color
   end
@@ -184,6 +216,9 @@ end
 
 class King < Piece
   attr_reader:color
+
+  symbols white: '♔', black: '♚'
+  
   def initialize(color)
     @color = color
   end
@@ -195,6 +230,9 @@ end
 
 class Pawn < Piece
   attr_reader :color
+
+  symbols white: '♙', black: '♟'
+
   def initialize(color)
     @color = color
   end
