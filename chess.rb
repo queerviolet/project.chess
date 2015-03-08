@@ -7,6 +7,7 @@ class Piece
     @capture_pattern = args.fetch(:capture_pattern, move_pattern)
     @can_jump = args.fetch(:can_jump, false)
     @can_reverse = args.fetch(:can_reverse, true)
+    @print_piece = args.fetch(:print_piece, nil)
   end
 
   def valid_move?(row,col)
@@ -30,7 +31,7 @@ end
 
 class Rook < Piece
   def initialize(location, state)
-    super(location, state, [[0,1], [1,0]], can_jump: true)
+    super(location, state, [[0,1], [1,0]], can_jump: true, print_piece: "♜")
   end
 
   def valid_move?(row,col)
@@ -41,7 +42,7 @@ end
 
 class Knight < Piece
   def initialize(location, state)
-    super(location, state, [[2,1.0], [1,2.0]], can_jump: true)
+    super(location, state, [[2,1.0], [1,2.0]], can_jump: true, print_piece:"♞")
   end
 
   def valid_move?(row,col)
@@ -60,7 +61,7 @@ end
 
 class King < Piece
   def initialize(location, state)
-    super(location, state, [[0,1], [1,0], [1,1]], can_jump: true)
+    super(location, state, [[0,1], [1,0], [1,1]], can_jump: true, print_piece: "♔")
   end
 
   def valid_move?(row,col)
@@ -86,19 +87,11 @@ end
 
 
 class Game
-  attr_accessor :board
+  attr_accessor :chess_board
 #   #creates new board object in initialize
   def initialize
+    @chess_board = Board.new.board
 #     #needs a data structure to hold player_1 and player_2
-    @board = [["♜","♞","♝","♛","♚","♝","♞","♜"],
-    ("♟"*8).split(""),
-    (" "*8).split(""),
-    (" "*8).split(""),
-    (" "*8).split(""),
-    (" "*8).split(""),
-    ("♙"*8).split(""),
-    ["♖","♘","♗","♕","♔","♗","♘","♖"]]
-  end
 #   #prints board after every move
 #   #to_s expects the board object to have a #board attr_reader
 #   def to_s
@@ -147,12 +140,13 @@ class Game
       desired_row, desired_col = strip_move([desired_col, desired_row.to_i])
       p [desired_row, desired_col]
     # # determine piece-type:
-      piece = @board[current_row][current_col]
+      piece = @chess_board[current_row][current_col]
     # Is player's desired moved a valid move for that piece type?
       move_validity = piece.valid_move?(desired_row, desired_col) #returns a bool
       if move_validity == true
-        if @board.cell_empty?(desired_row, desired_col) == false
-        desired_cell_piece = @board[desired_row][desired_col]
+        if @chess_board.cell_empty?(desired_row, desired_col) == false
+        desired_cell_piece = @chess_board[desired_row][desired_col]
+        p desired_cell_piece.is_a?(King)
     #     if piece.victim_capturable(desired_cell_piece.state)
     #       #capture victim
     #     else
@@ -164,22 +158,15 @@ class Game
     end
     # else
     #   "invalid move"
-    end
+  end
+
 end
 
-# game = Game.new
-# game.board[0][4] = King.new([0, 4], "black")
-# game.board[1][2] = Knight.new([1, 2], "white")
-# p game
-# # p game.strip_move(["b", 0])
-# game.turn
-# knight = Knight.new([1, 2], "white")
-# p knight.valid_move?(0, 4)
 # # ----------------------------------------------------------------------------------
 
 
 class Board
-attr_accessor :board, :captured_pieces
+  attr_accessor :board, :captured_pieces
   def initialize
    @board = [["♜","♞","♝","♛","♚","♝","♞","♜"],
     ("♟"*8).split(""),
@@ -273,6 +260,18 @@ attr_accessor :board, :captured_pieces
     return true
   end
 
+  end
+
+  def to_s
+    @board.each_with_index do |row, i|
+      "#{i + 1} #{row.each {|cell| cell.is_a?(String) ? cell : cell.print_piece}.join("")}"
+    end
+  end
 end
 
-
+# chess = Board.new
+# p chess
+game = Game.new
+puts game.chess_board
+# knight = Knight.new([1, 2], "white")
+# p knight.valid_move?(0, 4)
