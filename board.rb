@@ -58,7 +58,9 @@ class Board
 
   end
 
-  def check_path
+  def check_path(coordinates, move_coordinates)
+    object = find_piece(coordinates)
+    object.move_possibilities
     #  (Board) Will take start and end coordinates of move and will check path for validity
     #  (Board) Calculate dx (end_x - start_x) and dy (end_x - start_x)
   end

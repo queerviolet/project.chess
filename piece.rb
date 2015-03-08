@@ -128,7 +128,7 @@ class Bishop < Piece
     @color = color
   end
 
-  def moves
+  def move_possibilities
     moves = []
     (0..7).each do |x|
       (0..7).each do |y|
@@ -153,7 +153,7 @@ class Queen < Piece
     @color = color
   end
 
-  def moves
+  def move_possibilities
     moves = []
     (0..7).each do |x|
       (0..7).each do |y|
@@ -178,15 +178,13 @@ class King < Piece
     @color = color
   end
 
-  def moves
+  def move_possibilities
     moves = []
-    (0..7).each do |x|
-      (0..7).each do |y|
-        [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
+    (-1..1).each do |dx|
+      (-1..1).each do |dy|
           moves << [dx, dy]
         end
       end
-    end
     return moves
   end
 
@@ -204,7 +202,7 @@ class Pawn < Piece
     @color = color
   end
 
-  def moves
+  def move_possibilities
 
   end
 

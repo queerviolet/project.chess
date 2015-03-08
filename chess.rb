@@ -76,7 +76,10 @@ board = Board.new
 # puts board.find_piece([0,0])
 #p board
 
-board.move!([0,0], [0,1])
+# board.move!([0,0], [0,1])
+p board.check_path([0,4], [4,4])
+king = King.new(:black)
+
 
 
 
