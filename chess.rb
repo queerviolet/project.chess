@@ -23,9 +23,32 @@ class Game
 end
 
 class Board
-  attr_accessor :board
-  def initialize
-    
+  attr_reader :pieces, :width, :height
+
+  LAYOUT = [
+    [:♜, :♞, :♝, :♛, :♚, :♝, :♞, :♜,],
+    [:♟, :♟, :♟, :♟, :♟, :♟, :♟, :♟,],
+    [:_, :_, :_, :_, :_, :_, :_, :_,],
+    [:_, :_, :_, :_, :_, :_, :_, :_,],
+    [:_, :_, :_, :_, :_, :_, :_, :_,],
+    [:_, :_, :_, :_, :_, :_, :_, :_,],
+    [:♙, :♙, :♙, :♙, :♙, :♙, :♙, :♙,],
+    [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,],
+  ]
+
+  def initialize(width=8, height=8)
+    @width, @height = width, height
+    height = LAYOUT.length
+    width = LAYOUT[0].length
+    pieces = {}
+    LAYOUT.each_with_index do |row, row_index|
+      row.each_with_index do |symbol, column_index|
+        if piece = Piece[symbol]
+          pieces[[row_index, column_index]] = piece
+        end
+      end
+    end
+    p pieces
   end
 
   def check_path
@@ -57,7 +80,40 @@ class Board
  
 end
 
+class Square
+  attr_reader :board, :column, :row
+  def initialize(board, column, row)
+    @board, @column, @row = board, column, row
+  end
+
+  def valid?
+    @row > 0 && @row < @board.height && @column > 0 && @column < @board.width
+  end
+
+  def has_piece?
+  end
+end
+
 class Piece
+  attr_reader :color
+  attr_accessor :square
+
+  SYMBOLS = {}
+
+  def self.symbols(symbols)
+    self.const_set(:SYMBOLS, symbols)
+    symbols.each do |color, symbol|
+      Piece::SYMBOLS[symbol.to_sym] = [self, color]
+      Piece::SYMBOLS[symbol.to_s] = [self, color]
+    end
+  end
+
+  def self.[](symbol)
+    type, color = SYMBOLS[symbol]
+    return nil unless type
+    type.new(color)
+  end
+
   def initialize(square)
     @square = square
   end
@@ -148,7 +204,9 @@ class Pawn < Piece
 
 end
 
-board = Board.new
-p board.board
+# p square_A0 = Square.new(Board.new(8,8), 0, 0)
+# p square_A0.valid?
+p board = Board.new(8,8)
+
 
 
