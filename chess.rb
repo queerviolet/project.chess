@@ -1,6 +1,16 @@
 class Game
   def initialize
     @board = Board.new
+    @letters = {
+      "A" => 0,
+      "B" => 1,
+      "C" => 2,
+      "D" => 3,
+      "E" => 4,
+      "F" => 5,
+      "G" => 6,
+      "H" => 7
+    }
     play
   end
   #Finally, we need something to handle the REPL—getting 
@@ -8,20 +18,19 @@ class Game
   #class would be a good place to keep this code.
 
   def play
+    #  (Game) User will input the coordinate of the piece 
     to_s
-    puts "What move would you like to make?"
-    move = gets.chomp
-    p move
+    # puts "Choose a piece to move."
+    # square = gets.chomp.upcase.split("")
+    # # puts @board.find_piece(square).color
+    # coordinates = [@letters[square[0]].to_i, square[1].to_i]
+    puts "Player wants to move #{@board.find_piece([0,0])}"   
   end
 
   #Game gets a board_square from the user.
   def move
-    #  (Game) User will input the coordinate of the piece 
+    
     # she/he wants to move first via gets.chomp (start location)
-      puts ""
-      coordinates = gets.chomp
-      move = coordinates.downcase
-      p move
   end
 
   def to_s
@@ -68,10 +77,14 @@ class Board
   #Piece at that square, or the Piece does not belong to
   # user, Board replies to Game with an empty list of moves.
   def find_piece(coordinates)
-    @pieces[coordinates]
+    # @pieces[coordinates]
+    @pieces.each_key do |key|
+      puts "piece #{key} is #{@pieces[key]}"
+    end
   end
 
   def check_square(coordinates)
+    puts coordinates
     @pieces[coordinates].square
   end
 
