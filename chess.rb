@@ -43,13 +43,16 @@ class Board
     width = LAYOUT[0].length
     @pieces = {}
     LAYOUT.each_with_index do |row, row_idx|
-      row.each_with_index do |sym, col_idx|
+      row.each_with_index do |sym, column_idx|
         if piece = Piece[sym]
-          @pieces[[row_idx, col_idx]] = piece
+          @pieces[[row_idx, column_idx]] = piece
         end
       end
     end
     @pieces.each { |pos, piece| piece.square = self[*pos] }
+    @pieces.each do |piece|
+      p piece[0]
+    end
   end
 
   def [](row, col)
@@ -151,7 +154,7 @@ class Piece
   end
 
   def to_s
-    "#{symbol}#{pos}"
+    "#{symbol}"
   end
 
   def describe
@@ -270,10 +273,7 @@ class Pawn < Piece
 
 end
 
-# p square_A0 = Square.new(Board.new(8,8), 0, 0)
-# p square_A0.valid?
 board = Board.new
-puts board.pieces
 
 
 
