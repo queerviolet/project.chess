@@ -78,7 +78,8 @@ board = Board.new
 
 # board.move!([0,0], [0,1])
 #we think 0,4 is the white king
-p board.check_path([0,4], [4,4])
+p board.check_path([0,0], [0,7])
+p board.inspect_path
 king = King.new(:black)
 
 

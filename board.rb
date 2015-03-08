@@ -58,13 +58,33 @@ class Board
 
   end
 
-  def check_path(coordinates, move_coordinates)
-    object = find_piece(coordinates)
-    object.move_possibilities(coordinates).each do |coordinate|
-      puts find_piece(coordinate)
+  def check_path(coordinates, move_coordinates) #(0, 4)  (4, 4)
+    @path = []
+    dx = move_coordinates[0] - coordinates[0]
+    dy = move_coordinates[1] - coordinates[1]
+    old_x = coordinates[0]
+    old_y = coordinates[1]
+    (0..dx).each do |x|
+      (0..dy).each do |y|
+        @path << [old_x + x, old_y + y]
+      end
     end
+    @path
+    # object = find_piece(coordinates)
+    # object.move_possibilities(coordinates).each do |coordinate|
+    #   puts find_piece(coordinate)
+    # end
     #  (Board) Will take start and end coordinates of move and will check path for validity
     #  (Board) Calculate dx (end_x - start_x) and dy (end_x - start_x)
+  end
+
+  def inspect_path
+
+    @path.each do |square|
+      p @pieces[square]
+
+
+    end
   end
 
   def update_board
