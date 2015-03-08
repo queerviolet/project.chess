@@ -242,6 +242,18 @@ class Bishop < Piece
     @color = color
   end
 
+  def moves
+    moves = []
+    (0..7).each do |x|
+      (0..7).each do |y|
+        [[1, 1], [1, -1], [-1, -1], [-1, 1]].each do |dx, dy|
+          moves << [dx, dy]
+        end
+      end
+    end
+    return moves
+  end
+
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
 end
@@ -296,8 +308,9 @@ board.find_piece([7,7])
 board.find_piece([1,2])
 board.find_piece([7,5])
 board.find_piece([6,6])
-p  king = King.new(:black).moves
-p  rook = Rook.new(:black).moves
+p king = King.new(:black).moves
+p rook = Rook.new(:black).moves
+p biship = Bishop.new(:white).moves
 
 
 
