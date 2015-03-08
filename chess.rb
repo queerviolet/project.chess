@@ -73,17 +73,17 @@ class Board
     @pieces.each { |pos, piece| piece.square = self[*pos] }
   end
 
-  def get_empties
-    @empties = []
-    p @pieces
-    # @pieces.each do |piece|
-    #   p piece
-    #   # if piece == nil
-    #   #   @pieces << piece
-    #   # end
-    # end
-    @empties
-  end
+  # def get_empties
+  #   @empties = []
+  #   p @pieces
+  #   # @pieces.each do |piece|
+  #   #   p piece
+  #   #   # if piece == nil
+  #   #   #   @pieces << piece
+  #   #   # end
+  #   # end
+  #   @empties
+  # end
 
   #Board finds the Piece at that square. If there is no
   #Piece at that square, or the Piece does not belong to
@@ -97,7 +97,7 @@ class Board
   end
 
   def check_square(coordinates)
-    puts coordinates
+    # puts coordinates
     @pieces[coordinates].square
   end
 
@@ -122,8 +122,8 @@ class Board
   end
 
   def to_s
-    (0..height - 1).map do |r|
-      (0..width - 1).map do |c|
+    (0..7).map do |r|
+      (0..7).map do |c|
         if self[r, c].piece
           " #{self[r, c].piece.symbol} "
         else
@@ -132,8 +132,6 @@ class Board
       end.join
     end.join("\n")
   end
-
-
 
 end
 
@@ -260,6 +258,13 @@ class Rook < Piece
       end
     end
     return @moves
+
+    @squares =
+    7.times do
+      x += dx
+      y += dy
+    end
+
   end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
@@ -374,17 +379,17 @@ class Pawn < Piece
 
 end
 
-board = Board.new
+# board = Board.new
 # board.find_piece([7,7])
 # board.find_piece([1,2])
 # board.find_piece([7,5])
-puts "heya"
-puts board.find_piece([5,5]) == nil
-# puts board.check_square([0,6])
+# puts "heya"
+# puts board.find_piece([5,5]) == nil
+# # puts board.check_square([0,6])
 
-puts board.get_empties.count
+# puts board.get_empties.count
 
-# game = Game.new
+game = Game.new
 
 # board = Board.new
 # p board.pieces.count
@@ -397,5 +402,10 @@ puts board.get_empties.count
 # biship = Bishop.new(:white).moves.length
 # queen = Queen.new(:black).moves.length
 
+# rook = Rook.new(:black)
+# p rook.moves([0,0])
+
+board = Board.new
+puts board.check_square([0,0])
 
 
