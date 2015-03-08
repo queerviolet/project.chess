@@ -73,6 +73,18 @@ class Board
     @pieces.each { |pos, piece| piece.square = self[*pos] }
   end
 
+  def get_empties
+    @empties = []
+    p @pieces
+    # @pieces.each do |piece|
+    #   p piece
+    #   # if piece == nil
+    #   #   @pieces << piece
+    #   # end
+    # end
+    @empties
+  end
+
   #Board finds the Piece at that square. If there is no
   #Piece at that square, or the Piece does not belong to
   # user, Board replies to Game with an empty list of moves.
@@ -81,7 +93,7 @@ class Board
     # @pieces.each_key do |key|
     #   puts "piece #{key} is #{@pieces[key]}"
     # end
-    @pieces[[0,0]]
+    @pieces[coordinates]
   end
 
   def check_square(coordinates)
@@ -362,19 +374,23 @@ class Pawn < Piece
 
 end
 
-# board = Board.new
+board = Board.new
 # board.find_piece([7,7])
 # board.find_piece([1,2])
 # board.find_piece([7,5])
-# board.find_piece([6,6])
+puts "heya"
+puts board.find_piece([5,5]) == nil
 # puts board.check_square([0,6])
 
-game = Game.new
+puts board.get_empties.count
 
-board = Board.new
-p board.pieces.count
-p piece = Piece.new(:white)
-p piece.color == :white
+# game = Game.new
+
+# board = Board.new
+# p board.pieces.count
+# p piece = Piece.new(:white)
+# p piece.color == :white
+
 
 # king = King.new(:black).moves.length
 # puts rook = Rook.new(:black).moves(board)

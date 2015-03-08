@@ -15,14 +15,17 @@ describe 'Board' do
     expect(board.height).to equal(8)
   end
 
-  it 'has a clear method which removes all pieces' do
-    board.clear
-    expect(board.pieces.empty?).to equal(true)
+  # it 'has a clear method which removes all pieces' do
+  #   board.clear
+  #   expect(board.pieces.empty?).to equal(true)
+  # end
+
+  it 'Expects an empty space to equal nil' do
+    expect(board.find_piece([5, 5]) ).to equal(nil)
   end
 
-  it 'has thirty-two empty slots that are equal to nil' do
-    expect(board.pieces.empty?).to equal(32)
-  end
+  it 'has thrity two empty spaces' do
+    expect()
 
 end
 
