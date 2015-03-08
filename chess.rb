@@ -202,22 +202,24 @@ class Rook < Piece
   def initialize(color)
     @color = color
     @moves = []
+    @pieces_in_path = []
   end
 
   def moves(board)
     @board = board
-    puts "thing at 0,1"
-    puts board.find_piece([0,4])
+    # puts "thing at 0,1"
+    # puts @board.find_piece([0,4])
     (0..7).each do |x|
       (0..7).each do |y|
         [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
-          # @moves << @board.pieces[dx, dy]
+          # @pieces_in_path << @board.find_piece([dx,dy])
+          puts "Found at #{[dx,dy]}: #{@board.find_piece([dx,dy])}"
           @moves << [dx,dy]
         end
       end
     end
-    # return @moves.first
-    print "First move Rook can make: #{@moves.first}"
+    # return @moves
+    # return @pieces_in_path
   end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
@@ -338,7 +340,7 @@ board.find_piece([1,2])
 board.find_piece([7,5])
 board.find_piece([6,6])
 king = King.new(:black).moves
-p rook = Rook.new(:black).moves(board)
+puts rook = Rook.new(:black).moves(board)
 biship = Bishop.new(:white).moves.length
 queen = Queen.new(:black).moves.length
 
