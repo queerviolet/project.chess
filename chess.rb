@@ -13,23 +13,23 @@ class Game
     }
     play
   end
-  #Finally, we need something to handle the REPL—getting 
-  #input from the user and printing the board. A Game 
+  #Finally, we need something to handle the REPL—getting
+  #input from the user and printing the board. A Game
   #class would be a good place to keep this code.
 
   def play
-    #  (Game) User will input the coordinate of the piece 
+    #  (Game) User will input the coordinate of the piece
     to_s
     # puts "Choose a piece to move."
     # square = gets.chomp.upcase.split("")
-    # # puts @board.find_piece(square).color
+    # puts @board.find_piece(square).color
     # coordinates = [@letters[square[0]].to_i, square[1].to_i]
-    puts "Player wants to move #{@board.find_piece([0,0])}"   
+    # puts "Player wants to move #{@board.find_piece([0,0])}"
   end
 
   #Game gets a board_square from the user.
   def move
-    
+
     # she/he wants to move first via gets.chomp (start location)
   end
 
@@ -47,14 +47,14 @@ class Board
   attr_reader :pieces, :width, :height
 
   LAYOUT = [
-      [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,],
-      [:♙, :♙, :♙, :♙, :♙, :♙, :♙, :♙,],
-      [:_, :_, :_, :_, :_, :_, :_, :_,],
-      [:_, :_, :_, :_, :_, :_, :_, :_,],
-      [:_, :_, :_, :_, :_, :_, :_, :_,],
-      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:♜, :♞, :♝, :♛, :♚, :♝, :♞, :♜,],
       [:♟, :♟, :♟, :♟, :♟, :♟, :♟, :♟,],
-      [:♜, :♞, :♝, :♛, :♚, :♝, :♞, :♜,]
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:_, :_, :_, :_, :_, :_, :_, :_,],
+      [:♙, :♙, :♙, :♙, :♙, :♙, :♙, :♙,],
+      [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,]
     ]
 
   # pieces is a hash of {[row:(0..7), col:(0..7)] => Chesspiece}
@@ -73,14 +73,15 @@ class Board
     @pieces.each { |pos, piece| piece.square = self[*pos] }
   end
 
-  #Board finds the Piece at that square. If there is no 
+  #Board finds the Piece at that square. If there is no
   #Piece at that square, or the Piece does not belong to
   # user, Board replies to Game with an empty list of moves.
   def find_piece(coordinates)
     # @pieces[coordinates]
-    @pieces.each_key do |key|
-      puts "piece #{key} is #{@pieces[key]}"
-    end
+    # @pieces.each_key do |key|
+    #   puts "piece #{key} is #{@pieces[key]}"
+    # end
+    @pieces[[0,0]]
   end
 
   def check_square(coordinates)
@@ -96,8 +97,6 @@ class Board
   def update_board
     #  (Board) If valid, will write over Board with new placement of specific piece
   end
-
-  
 
   #Game asks Board for moves for the user at the board_square
   # Board filters the list of moves to only those which
@@ -122,8 +121,8 @@ class Board
     end.join("\n")
   end
 
- 
- 
+
+
 end
 
 class Square
@@ -173,7 +172,7 @@ class Piece
   end
 
   def self.[](symbol)
-    type, color = SYMBOLS[symbol]    
+    type, color = SYMBOLS[symbol]
     return nil unless type
     type.new(color)
   end
@@ -203,7 +202,7 @@ class Piece
   end
 
   #  (Piece) If valid, will reset square to new square
-   
+
   #Some pieces can jump over other pieces.
   # Some pieces can turn into other pieces.
 
@@ -372,6 +371,10 @@ end
 
 game = Game.new
 
+board = Board.new
+p board.pieces.count
+p piece = Piece.new(:white)
+p piece.color == :white
 
 # king = King.new(:black).moves.length
 # puts rook = Rook.new(:black).moves(board)
