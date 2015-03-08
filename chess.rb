@@ -1,21 +1,30 @@
 class Game
   def initialize
-    
+    @board = Board.new
+    play
   end
   #Finally, we need something to handle the REPL—getting 
   #input from the user and printing the board. A Game 
   #class would be a good place to keep this code.
 
+  def play
+    to_s
+    puts "What move would you like to make?"
+  end
+
   #Game gets a board_square from the user.
-  def ask_for_move
+  def move
     #  (Game) User will input the coordinate of the piece 
     # she/he wants to move first via gets.chomp (start location)
-    coordinates = gets.chomp
+      puts ""
+      coordinates = gets.chomp
+      puts coordinates
   end
 
   def to_s
     #Game presents the moves list to the user and says,
     # "user, your move?"
+    puts @board
   end
 
   # Move logic
@@ -56,7 +65,11 @@ class Board
   #Piece at that square, or the Piece does not belong to
   # user, Board replies to Game with an empty list of moves.
   def find_piece(coordinates)
-    puts @pieces[coordinates]
+    @pieces[coordinates]
+  end
+
+  def check_square(coordinates)
+    @pieces[coordinates].square
   end
 
   def check_path
@@ -212,14 +225,12 @@ class Rook < Piece
     (0..7).each do |x|
       (0..7).each do |y|
         [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
-          # @pieces_in_path << @board.find_piece([dx,dy])
-          puts "Found at #{[dx,dy]}: #{@board.find_piece([dx,dy])}"
+          # puts "Found at #{[dx,dy]}: #{@board.find_piece([dx,dy])}"
           @moves << [dx,dy]
         end
       end
     end
-    # return @moves
-    # return @pieces_in_path
+    return @moves
   end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
@@ -334,15 +345,20 @@ class Pawn < Piece
 
 end
 
-board = Board.new
-board.find_piece([7,7])
-board.find_piece([1,2])
-board.find_piece([7,5])
-board.find_piece([6,6])
-king = King.new(:black).moves
-puts rook = Rook.new(:black).moves(board)
-biship = Bishop.new(:white).moves.length
-queen = Queen.new(:black).moves.length
+# board = Board.new
+# board.find_piece([7,7])
+# board.find_piece([1,2])
+# board.find_piece([7,5])
+# board.find_piece([6,6])
+# puts board.check_square([0,6])
+
+game = Game.new
+
+
+# king = King.new(:black).moves.length
+# puts rook = Rook.new(:black).moves(board)
+# biship = Bishop.new(:white).moves.length
+# queen = Queen.new(:black).moves.length
 
 
 
