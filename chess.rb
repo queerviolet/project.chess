@@ -1,98 +1,96 @@
 class Game
   def initialize
+    #x positions, i.e. "A5" is "05"
+    @letter_positions = {
+      "A" => 0,
+      "B" => 1,
+      "C" => 2,
+      "D" => 3,
+      "E" => 4,
+      "F" => 5,
+      "G" => 6,
+      "H" => 7
+    }
   end
 end
 
 class Board
   attr_accessor :board
   def initialize
-  @letter_to_x_value = {
-                  "A" => 0,
-                  "B" => 1,
-                  "C" => 2,
-                  "D" => 3,
-                  "E" => 4,
-                  "F" => 5,
-                  "G" => 6,
-                  "H" => 7
-                  }
-
+  #key piece objects to board coordinates
   @board = {
-      {0 => 7} => Rook.new({0 => 7}, "black"),
-      {1 => 7} => Knight.new({1 => 7},"black"),
-      {2 => 7} => Bishop.new({2 => 7},"black"),
-      {3 => 7} => Queen.new({3 => 7},"black"),
-      {4 => 7} => King.new({4 => 7},"black"),
-      {5 => 7} => Bishop.new({5 => 7},"black"),
-      {6 => 7} => Knight.new({6 => 7},"black"),
-      {7 => 7} => Rook.new({7 => 7}, "black"),
+      [0,7] => Rook.new("black"),
+      [1,7] => Knight.new("black"),
+      [2,7] => Bishop.new("black"),
+      [3,7] => Queen.new"black"),
+      [4,7] => King.new("black"),
+      [5,7] => Bishop.new("black"),
+      [6,7] => Knight.new("black"),
+      [7,7] => Rook.new("black"),
 
-      {0 => 6} => Pawn.new({0 => 6},"black"),
-      {1 => 6} => Pawn.new({1 => 6},"black"),
-      {2 => 6} => Pawn.new({2 => 6},"black"),
-      {3 => 6} => Pawn.new({3 => 6},"black"),
-      {4 => 6} => Pawn.new({4 => 6},"black"),
-      {5 => 6} => Pawn.new({5 => 6},"black"),
-      {6 => 6} => Pawn.new({6 => 6},"black"),
-      {7 => 6} => Pawn.new({7 => 6},"black"),
+      [0,6] => Pawn.new("black"),
+      [1,6] => Pawn.new("black"),
+      [2,6] => Pawn.new("black"),
+      [3,6] => Pawn.new("black"),
+      [4,6] => Pawn.new("black"),
+      [5,6] => Pawn.new("black"),
+      [6,6] => Pawn.new("black"),
+      [7,6] => Pawn.new("black"),
 
-      {0 => 5} => nil,
-      {1 => 5} => nil,
-      {2 => 5} => nil,
-      {3 => 5} => nil,
-      {4 => 5} => nil,
-      {5 => 5} => nil,
-      {6 => 5} => nil,
-      {7 => 5} => nil,
+      [0,5] => nil,
+      [1,5] => nil,
+      [2,5] => nil,
+      [3,5] => nil,
+      [4,5] => nil,
+      [5,5] => nil,
+      [6,5] => nil,
+      [7,5] => nil,
 
-      {0 => 4} => nil,
-      {1 => 4} => nil,
-      {2 => 4} => nil,
-      {3 => 4} => nil,
-      {4 => 4} => nil,
-      {5 => 4} => nil,
-      {6 => 4} => nil,
-      {7 => 4} => nil,
+      [0,4] => nil,
+      [1,4] => nil,
+      [2,4] => nil,
+      [3,4] => nil,
+      [4,4] => nil,
+      [5,4] => nil,
+      [6,4] => nil,
+      [7,4] => nil,
 
-      {0 => 3} => nil,
-      {1 => 3} => nil,
-      {2 => 3} => nil,
-      {3 => 3} => nil,
-      {4 => 3} => nil,
-      {5 => 3} => nil,
-      {6 => 3} => nil,
-      {7 => 3} => nil,
+      [0,3] => nil,
+      [1,3] => nil,
+      [2,3] => nil,
+      [3,3] => nil,
+      [4,3] => nil,
+      [5,3] => nil,
+      [6,3] => nil,
+      [7,3] => nil,
 
-      {0 => 2} => nil,
-      {1 => 2} => nil,
-      {2 => 2} => nil,
-      {3 => 2} => nil,
-      {4 => 2} => nil,
-      {5 => 2} => nil,
-      {6 => 2} => nil,
-      {7 => 2} => nil,
+      [0,2] => nil,
+      [1,2] => nil,
+      [2,2] => nil,
+      [3,2] => nil,
+      [4,2] => nil,
+      [5,2] => nil,
+      [6,2] => nil,
+      [7,2] => nil,
 
-      {0 => 1} => Pawn.new({0 => 1},"white"),
-      {1 => 1} => Pawn.new({1 => 1},"white"),
-      {2 => 1} => Pawn.new({2 => 1},"white"),
-      {3 => 1} => Pawn.new({3 => 1},"white"),
-      {4 => 1} => Pawn.new({4 => 1},"white"),
-      {5 => 1} => Pawn.new({5 => 1},"white"),
-      {6 => 1} => Pawn.new({6 => 1},"white"),
-      {7 => 1} => Pawn.new({7 => 1},"white"),
+      [0,1] => Pawn.new("white"),
+      [1,1] => Pawn.new("white"),
+      [2,1] => Pawn.new("white"),
+      [3,1] => Pawn.new("white"),
+      [4,1] => Pawn.new("white"),
+      [5,1] => Pawn.new("white"),
+      [6,1] => Pawn.new("white"),
+      [7,1] => Pawn.new("white"),
 
-      {0 => 0} => Rook.new({0 => 0},"white"),
-      {1 => 0} => Knight.new({1 => 0},"white"),
-      {2 => 0} => Bishop.new({2 => 0},"white"),
-      {3 => 0} => Queen.new({3 => 0},"white"),
-      {4 => 0} => King.new({4 => 0},"white"),
-      {5 => 0} => Bishop.new({5 => 0},"white"),
-      {6 => 0} => Knight.new({6 => 0},"white"),
-      {7 => 0} => Rook.new({7 => 0},"white")
+      [0,0] => Rook.new("white"),
+      [1,0] => Knight.new("white"),
+      [2,0] => Bishop.new("white"),
+      [3,0] => Queen.new("white"),
+      [4,0] => King.new("white"),
+      [5,0] => Bishop.new("white"),
+      [6,0] => Knight.new("white"),
+      [7,0] => Rook.new("white")
   }
-
-  @piece = Piece.new(@board)
-
   end
 
 
