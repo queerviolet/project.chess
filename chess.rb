@@ -195,24 +195,29 @@ end
 
 # add module or to class the coordinate comparison
 class Rook < Piece
-  attr_reader :color
+  attr_reader :color, :moves
 
   symbols white: '♖', black: '♜'
 
   def initialize(color)
     @color = color
+    @moves = []
   end
 
-  def moves
-    moves = []
+  def moves(board)
+    @board = board
+    puts "thing at 0,1"
+    puts board.find_piece([0,4])
     (0..7).each do |x|
       (0..7).each do |y|
         [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
-          moves << [dx, dy]
+          # @moves << @board.pieces[dx, dy]
+          @moves << [dx,dy]
         end
       end
     end
-    return moves
+    # return @moves.first
+    print "First move Rook can make: #{@moves.first}"
   end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
@@ -332,10 +337,10 @@ board.find_piece([7,7])
 board.find_piece([1,2])
 board.find_piece([7,5])
 board.find_piece([6,6])
-p king = King.new(:black).moves
-p rook = Rook.new(:black).moves.length
-p biship = Bishop.new(:white).moves.length
-p queen = Queen.new(:black).moves.length
+king = King.new(:black).moves
+p rook = Rook.new(:black).moves(board)
+biship = Bishop.new(:white).moves.length
+queen = Queen.new(:black).moves.length
 
 
 
