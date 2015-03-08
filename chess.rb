@@ -1,3 +1,6 @@
+require_relative 'board.rb'
+require_relative 'piece.rb'
+
 class Game
   def initialize
     @board = Board.new
@@ -71,8 +74,11 @@ game = Game.new
 
 board = Board.new
 # puts board.find_piece([0,0])
+#p board
 
 board.move!([0,0], [0,1])
+
+
 
 
 

@@ -40,9 +40,22 @@ class Board
   end
 
   def move!(coordinates, move_coordinates)
-    # @pieces[move_coordinates].square = @pieces[coordinates].square
-    # @pieces[coordinates] = nil
+    puts @pieces[coordinates]
+    puts @pieces[move_coordinates]
+
+    piece_moved = @pieces[coordinates]
+    @pieces[move_coordinates] = nil
+    @pieces[coordinates] = nil
+    @pieces[move_coordinates] = piece_moved
+
+    puts @pieces[coordinates]
+    puts @pieces[move_coordinates]
     puts @board
+
+    # check if the piece is allowed to move in the end coordinates in that direction
+    # pieces.valid?
+
+
   end
 
   def check_path
@@ -60,6 +73,10 @@ class Board
   def moves
 
   end
+
+  # def clear(coordinates)
+  #   @pieces.delete(coordinates)
+  # end
 
   def [](row, col)
     Square.new(self, row, col)
