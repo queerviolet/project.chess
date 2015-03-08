@@ -10,6 +10,8 @@ class Game
   def play
     to_s
     puts "What move would you like to make?"
+    move = gets.chomp
+    p move
   end
 
   #Game gets a board_square from the user.
@@ -18,7 +20,8 @@ class Game
     # she/he wants to move first via gets.chomp (start location)
       puts ""
       coordinates = gets.chomp
-      puts coordinates
+      move = coordinates.downcase
+      p move
   end
 
   def to_s
@@ -112,8 +115,10 @@ end
 
 class Square
   attr_reader :board, :row, :col
+  attr_accessor :piece
   def initialize(board, row, col)
     @board, @row, @col = board, row, col
+    @piece = piece
   end
 
   def valid?
