@@ -267,6 +267,18 @@ class Queen < Piece
     @color = color
   end
 
+  def moves
+    moves = []
+    (0..7).each do |x|
+      (0..7).each do |y|
+        [[1, 0], [1, 1], [1, -1], [0, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1]].each do |dx, dy|
+          moves << [dx,dy]
+        end
+      end
+    end
+    moves
+  end
+
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
 end
@@ -281,7 +293,15 @@ class King < Piece
   end
 
   def moves
-    [[-1,0], [0,1], [1,0], [0,-1]]
+    moves = []
+    (0..7).each do |x|
+      (0..7).each do |y|
+        [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
+          moves << [dx, dy]
+        end
+      end
+    end
+    return moves
   end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
@@ -298,6 +318,10 @@ class Pawn < Piece
     @color = color
   end
 
+  def moves
+
+  end
+
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
 
@@ -309,8 +333,9 @@ board.find_piece([1,2])
 board.find_piece([7,5])
 board.find_piece([6,6])
 p king = King.new(:black).moves
-p rook = Rook.new(:black).moves
-p biship = Bishop.new(:white).moves
+p rook = Rook.new(:black).moves.length
+p biship = Bishop.new(:white).moves.length
+p queen = Queen.new(:black).moves.length
 
 
 
