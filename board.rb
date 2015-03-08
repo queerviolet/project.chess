@@ -60,7 +60,9 @@ class Board
 
   def check_path(coordinates, move_coordinates)
     object = find_piece(coordinates)
-    object.move_possibilities
+    object.move_possibilities(coordinates).each do |coordinate|
+      puts find_piece(coordinate)
+    end
     #  (Board) Will take start and end coordinates of move and will check path for validity
     #  (Board) Calculate dx (end_x - start_x) and dy (end_x - start_x)
   end

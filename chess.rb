@@ -77,6 +77,7 @@ board = Board.new
 #p board
 
 # board.move!([0,0], [0,1])
+#we think 0,4 is the white king
 p board.check_path([0,4], [4,4])
 king = King.new(:black)
 

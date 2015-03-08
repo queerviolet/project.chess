@@ -176,13 +176,17 @@ class King < Piece
 
   def initialize(color)
     @color = color
+    @possible_moves = []
   end
 
-  def move_possibilities
+  def move_possibilities(coordinates)
     moves = []
     (-1..1).each do |dx|
       (-1..1).each do |dy|
-          moves << [dx, dy]
+          # moves << [dx, dy]
+          new_x = coordinates[0] + dx
+          new_y = coordinates[1] + dy
+          moves << [new_x, new_y]
         end
       end
     return moves
