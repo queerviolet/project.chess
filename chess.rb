@@ -10,11 +10,25 @@ class Piece
     @print_piece = args.fetch(:print_piece, nil)
   end
 
-  def valid_move?(row,col)
-    # @move_pattern.each do |dy, dx|
-    #   return
-    @move_pattern[0]/@move_pattern[1] == [(@location[0] - row)/ (@location[1] - col)].abs
+  def valid_move?(row, col)
+    drow = (row - @location[0]).abs
+    dcol = (col - @location[1]).abs
+
+    @move_pattern.each do |move|
+      # return false if drow and dcol is different for diagonal move
+      return false if move[0] == move[1] && drow != dcol
+      # return true if move is less than valid move
+      return true if drow < move_pattern[0] && dcol < move_pattern[1]
+    end
+    # no move pattern passed so return false
+    return false
   end
+
+  # def valid_move?(row,col)
+  #   # @move_pattern.each do |dy, dx|
+  #   #   return
+  #   @move_pattern[0]/@move_pattern[1] == [(@location[0] - row)/ (@location[1] - col)].abs
+  # end
 
   def move(row,col)
     @location = [row,col]
@@ -23,51 +37,79 @@ class Piece
   def victim_capturable?(victim_state)
     @state != victim_state
   end
+
+  def to_s
+    return state == 'black' ? @print_piece[0] : @print_piece[1]
+  end
 end
 
 class Pawn < Piece
+  # black goes positive in column while white goes negative in column
+  def initialize(location, state)
+    @first_move = true
+    if(state == 'black')
+      super(location, state, [[0,2]], capture_pattern: [[-1,1],[1,1]], can_reverse: false, print_piece: ["♟", "♙"])
+    else
+      super(location, state, [[0,2]], capture_pattern: [[-1,-1],[1,-1]], can_reverse: false, print_piece: ["♟", "♙"])
+    end
+  end
 
+  def first_move?
+    return @first_move
+  end
+
+  def moved_first_time
+    @first_move = false
+
+    # update move to only move 1 space after first move taken
+    @move_pattern = [[1,0]]
+  end
+
+
+  def valid_move?(row, col)
+    drow = (row - @location[0]).abs
+    dcol = (col - @location[1]).abs
+
+    @move_pattern.each do |move|
+      # return false if drow and dcol is different for diagonal move
+      return false if move[0] == move[1] && drow != dcol
+      # return true if move is less than valid move
+      return true if drow < move_pattern[0] && dcol < move_pattern[1]
+    end
+    # no move pattern passed so return false
+    return false
+  end
 end
 
 class Rook < Piece
   def initialize(location, state)
-    super(location, state, [[0,1], [1,0]], can_jump: true, print_piece: "♜")
-  end
-
-  def valid_move?(row,col)
-    (@move_pattern[0][0]/@move_pattern[0][1] == (@location[0] - row)/ (@location[1] - col).abs) ||
-    (@move_pattern[1][0]/@move_pattern[1][1] == (@location[0] - row)/ (@location[1] - col).abs)
+    super(location, state, [[0,1], [1,0]], can_jump: true, print_piece: ["♜", "♖"])
   end
 end
 
 class Knight < Piece
   def initialize(location, state)
-    super(location, state, [[2,1.0], [1,2.0]], can_jump: true, print_piece:"♞")
-  end
-
-  def valid_move?(row,col)
-    @move_pattern[0][0]/@move_pattern[0][1] == ((@location[0] - row)/ (@location[1] - col).to_f).abs ||
-    @move_pattern[1][0]/@move_pattern[1][1] == ((@location[0] - row)/ (@location[1] - col).to_f).abs
+    super(location, state, [[2,1.0], [1,2.0]], can_jump: true, print_piece: ["♞", "♘"])
   end
 end
 
 class Bishop < Piece
-
+  def initialize(location, state)
+    @first_move = true
+    super(location, state, [[8,8]], print_piece: ["♝", "♗"])
+  end
 end
 
 class Queen < Piece
-
+  def initialize(location, state)
+    @first_move = true
+    super(location, state, [[8,8], [8,0], [0,8]], print_piece: ["♟", "♙"])
+  end
 end
 
 class King < Piece
   def initialize(location, state)
-    super(location, state, [[0,1], [1,0], [1,1]], can_jump: true, print_piece: "♔")
-  end
-
-  def valid_move?(row,col)
-    @move_pattern[0] == [@location[0]-row, @location[1]-col].map { |el| el.abs } ||
-    @move_pattern[1] == [@location[0]-row, @location[1]-col].map { |el| el.abs } ||
-    @move_pattern[2] == [@location[0]-row, @location[1]-col].map { |el| el.abs }
+    super(location, state, [[0,1], [1,0], [1,1]], can_jump: true, print_piece: ["♚", "♔"])
   end
 end
 
@@ -98,7 +140,7 @@ class Game
 #     @board.board.map do |row|
 #       "#{row}"
 #     end.join("\n")
-#   end
+  end
 #   #strips user input [col, row] into row, col format
 #   #expects a move array with 2 elements
   def strip_move(move)
@@ -130,36 +172,35 @@ class Game
 #   end
 
 
-    def turn
-      puts "Enter the piece you'd like to move by coordinates:"
-      current_col, current_row = gets.chomp.split("")
-      current_row, current_col = strip_move([current_col, current_row.to_i])
-      puts "Enter where you'd like to move the piece:"
-      desired_col, desired_row = gets.chomp.split("")
-      #assigning row and col variables (reversed from user format, which is col, row)
-      desired_row, desired_col = strip_move([desired_col, desired_row.to_i])
-      p [desired_row, desired_col]
-    # # determine piece-type:
-      piece = @chess_board[current_row][current_col]
-    # Is player's desired moved a valid move for that piece type?
-      move_validity = piece.valid_move?(desired_row, desired_col) #returns a bool
-      if move_validity == true
-        if @chess_board.cell_empty?(desired_row, desired_col) == false
-        desired_cell_piece = @chess_board[desired_row][desired_col]
-        p desired_cell_piece.is_a?(King)
-    #     if piece.victim_capturable(desired_cell_piece.state)
-    #       #capture victim
-    #     else
-    #       #return invalid move
-    #     end
-    #   else
-    #     #move piece to desired cell
-      end
-    end
-    # else
-    #   "invalid move"
-  end
-
+  #   def turn
+  #     puts "Enter the piece you'd like to move by coordinates:"
+  #     current_col, current_row = gets.chomp.split("")
+  #     current_row, current_col = strip_move([current_col, current_row.to_i])
+  #     puts "Enter where you'd like to move the piece:"
+  #     desired_col, desired_row = gets.chomp.split("")
+  #     #assigning row and col variables (reversed from user format, which is col, row)
+  #     desired_row, desired_col = strip_move([desired_col, desired_row.to_i])
+  #     p [desired_row, desired_col]
+  #   # # determine piece-type:
+  #     piece = @chess_board[current_row][current_col]
+  #   # Is player's desired moved a valid move for that piece type?
+  #     move_validity = piece.valid_move?(desired_row, desired_col) #returns a bool
+  #     if move_validity == true
+  #       if @chess_board.cell_empty?(desired_row, desired_col) == false
+  #       desired_cell_piece = @chess_board[desired_row][desired_col]
+  #       p desired_cell_piece.is_a?(King)
+  #   #     if piece.victim_capturable(desired_cell_piece.state)
+  #   #       #capture victim
+  #   #     else
+  #   #       #return invalid move
+  #   #     end
+  #   #   else
+  #   #     #move piece to desired cell
+  #     end
+  #   end
+  #   # else
+  #   #   "invalid move"
+  # end
 end
 
 # # ----------------------------------------------------------------------------------
@@ -260,12 +301,10 @@ class Board
     return true
   end
 
-  end
-
   def to_s
-    @board.each_with_index do |row, i|
-      "#{i + 1} #{row.each {|cell| cell.is_a?(String) ? cell : cell.print_piece}.join("")}"
-    end
+    @board.each_with_index.map do |row, i|
+      "#{i + 1} #{row.join(' ')}"
+    end.join("\n")
   end
 end
 
