@@ -81,7 +81,7 @@ class Board
   def inspect_path
 
     @path.each do |square|
-      p @pieces[square]
+      puts @pieces[square]
 
 
     end

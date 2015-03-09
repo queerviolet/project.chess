@@ -81,25 +81,23 @@ class Rook < Piece
 
   end
 
-  def moves(board)
-    @board = board
-    (0..7).each do |x|
-      (0..7).each do |y|
-        [[1, 0], [0, 1], [0, -1], [-1, 0]].each do |dx, dy|
-          # puts "Found at #{[dx,dy]}: #{@board.find_piece([dx,dy])}"
-          @moves << [dx,dy]
+  def move_possibilities(coordinates)
+    moves = []
+    (-7..7).each do |dx|
+      (-7..7).each do |dy|
+            # moves << [dx, dy]
+            new_x = coordinates[0] + dx
+            new_y = coordinates[1] + dy
+            if ((new_x >= 0 && new_x <= 7) && (new_y >= 0 && new_y <= 7)) && (dx == 0 && dy.abs <= 7) || (dy == 0 && dx.abs <= 7)
+              moves << [new_x, new_y]
+            end
+          end
         end
-      end
-    end
-    return @moves
-
-    @squares =
-    7.times do
-      x += dx
-      y += dy
-    end
-
+        return moves
   end
+
+
+
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
@@ -113,6 +111,20 @@ class Knight < Piece
   def initialize(color)
     @color = color
   end
+
+  def move_possibilities(coordinates)
+    moves = []
+    (-1..1).each do |dx|
+      (-1..1).each do |dy|
+            # moves << [dx, dy]
+            new_x = coordinates[0] + dx
+            new_y = coordinates[1] + dy
+            moves << [new_x, new_y]
+          end
+        end
+        return moves
+
+    end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
@@ -128,17 +140,20 @@ class Bishop < Piece
     @color = color
   end
 
-  def move_possibilities
+  def move_possibilities(coordinates)
     moves = []
-    (0..7).each do |x|
-      (0..7).each do |y|
-        [[1, 1], [1, -1], [-1, -1], [-1, 1]].each do |dx, dy|
-          moves << [dx, dy]
+    (-7..7).each do |dx|
+      (-7..7).each do |dy|
+          # moves << [dx, dy]
+          new_x = coordinates[0] + dx
+          new_y = coordinates[1] + dy
+          if (dx.abs == dy.abs) && (new_x <= 7 && new_y <= 7) && (new_x >=0 && new_y >= 0)
+            moves << [new_x, new_y]
+          end
         end
       end
+      return moves
     end
-    return moves
-  end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
@@ -153,17 +168,20 @@ class Queen < Piece
     @color = color
   end
 
-  def move_possibilities
+  def move_possibilities(coordinates)
     moves = []
-    (0..7).each do |x|
-      (0..7).each do |y|
-        [[1, 0], [1, 1], [1, -1], [0, 1], [0, -1], [-1, 0], [-1, -1], [-1, 1]].each do |dx, dy|
-          moves << [dx,dy]
+    (-7..7).each do |dx|
+      (-7..7).each do |dy|
+          # moves << [dx, dy]
+          new_x = coordinates[0] + dx
+          new_y = coordinates[1] + dy
+          if (new_x >= 0 && new_y >= 0 && new_x <= 7 && new_y <= 7) && ((dx.abs == dy.abs) || (dx.abs == 0 && dy.abs <= 7) || (dy.abs == 0 && dx.abs <= 7))
+            moves << [new_x, new_y]
+          end
         end
       end
+      return moves
     end
-    moves
-  end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board
@@ -189,8 +207,8 @@ class King < Piece
           moves << [new_x, new_y]
         end
       end
-    return moves
-  end
+      return moves
+    end
 
   #  (subclass of Piece) Check if dx, dy is valid in terms of signature moves
   #  (subclass of Piece) Will return that move is valid to Board

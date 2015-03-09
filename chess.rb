@@ -22,7 +22,7 @@ class Game
 
   def play
     #  (Game) User will input the coordinate of the piece
-    to_s
+    # to_s
     # puts "Choose a piece to move."
     # square = gets.chomp.upcase.split("")
     # puts @board.find_piece(square).color
@@ -79,8 +79,14 @@ board = Board.new
 # board.move!([0,0], [0,1])
 #we think 0,4 is the white king
 p board.check_path([0,0], [0,7])
-p board.inspect_path
-king = King.new(:black)
+board.inspect_path
+queen = Queen.new(:white)
+p queen.move_possibilities([3, 3])
+# bishop = Bishop.new(:black)
+# p bishop.move_possibilities([3, 3])
+rook = Rook.new(:black)
+p rook.move_possibilities([3, 3])
+
 
 
 
