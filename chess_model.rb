@@ -13,7 +13,7 @@ WEST = [0, -1]
 EAST = [0, 1]
 NORTHEAST = [1, 1]
 NORTHWEST = [1, -1]
-SOUTHEAST = [-1. 1]
+SOUTHEAST = [-1, 1]
 SOUTHWEST = [-1, -1]
 
 
@@ -24,7 +24,7 @@ class Pawn
 
   def initialize(args)
     @postion = args[:position]
-    @color = color[:color]
+    @color = args[:color]
     @first_move = true
 
     if @color == "white"
@@ -104,9 +104,49 @@ end
 
 class Board
 
-  BOARD_HEIGHT = 8
   def initialize
+    @board = Array.new(8) {Array.new(8)}
+    @white_pieces_array = []
+    #white pawns
+    for x in 0..7 do
+      args = {
+        color: "white",
+        position: [1, x]
+      }
+     @white_pieces_array << Pawn.new(args)
+    end
+    #white rooks
+    args = {
+      color: "white",
+      position: [0, 0]
+    }
+    @white_pieces_array << Rook.new(args)
 
+    args = {
+      color: "white",
+      position: [0,7]
+    }
+    @white_pieces_array << Rook.new(args)
+    #white bishop
+    #white knights
+    #white queen
+    #white king
+    @black_pieces_array = []
+    #black pawns
+    for x in 0..7 do
+      args = {
+        color: "black",
+        position: [6, x]
+      }
+     @black_pieces_array << Pawn.new(args)
+    end
+    p @white_pieces_array
+    #p @black_pieces_array
+    #black rooks
+    #black bishop
+    #black knights
+    #black queen
+    #black king
   #output: make a nested array, @board that is BOARD_HEIGHT squared with all spaces = nil (default)
   #make white pieces and black pieces arrays fill with all possible pieces(make new objects) with default positions
   end
@@ -137,11 +177,14 @@ class Board
     #false if the space is not in the array
   end
 
-  def kk_move
+  def king_move
     #input: object
     #output: returns array of valid moves
     #checks all 8 possibilities
 
+  end
+
+  def knight_move
   end
 
   def pawn_move
@@ -159,3 +202,5 @@ class Board
   end
 
 end
+
+board = Board.new
