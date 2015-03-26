@@ -34,9 +34,7 @@ class Pawn
       @moves = [SOUTH]
       @attack = [SOUTHEAST, SOUTHWEST]
     end
-
   end
-
 end
 
 class Knight
@@ -52,23 +50,27 @@ class Knight
 end
 
 class Rook
-    #input
-  #output
 
-  def initialize
-    @position = position
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @position = args[:position]
+    @moves = [NORTH, SOUTH, EAST, WEST]
+    @color = args[:color]
   end
-
 end
 
 class Bishop
-    #input
-  #output
 
-  def initialize
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @position = args[:position]
+    @moves = [NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @color = args[:color]
   end
-
-
 end
 
 class Queen
@@ -104,6 +106,7 @@ class Board
 
   BOARD_HEIGHT = 8
   def initialize
+
   #output: make a nested array, @board that is BOARD_HEIGHT squared with all spaces = nil (default)
   #make white pieces and black pieces arrays fill with all possible pieces(make new objects) with default positions
   end
