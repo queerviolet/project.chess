@@ -7,71 +7,94 @@
 #speed chess
 #piece class?
 
-north = [1,0]
-south = [-1, 0]
-west = [0, -1]
-east = [0, 1]
-northeast = [1, 1]
-northwest = [1, -1]
-southeast = [-1. 1]
-southwest = [-1, -1]
+NORTH = [1,0]
+SOUTH = [-1, 0]
+WEST = [0, -1]
+EAST = [0, 1]
+NORTHEAST = [1, 1]
+NORTHWEST = [1, -1]
+SOUTHEAST = [-1. 1]
+SOUTHWEST = [-1, -1]
 
 
 class Pawn
 
+  attr_reader :color, :moves, :attack
+  attr_accessor :first_move, :position
 
-  def initialize
-    #argument hash
-    #arguments: position, color, how_it_moves
-    #first_move starts true
+  def initialize(args)
+    @postion = args[:position]
+    @color = color[:color]
+    @first_move = true
+
+    if @color == "white"
+      @moves = [NORTH]
+      @attack = [NORTHEAST, NORTHWEST]
+    else
+      @moves = [SOUTH]
+      @attack = [SOUTHEAST, SOUTHWEST]
+    end
   end
-
 end
 
 class Knight
-    #input
-  #output
 
-  def initialize
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @color = args[:color]
+    @position = args[:position]
   end
-
-
 end
 
 class Rook
-    #input
-  #output
 
-  def initialize
-    @position = position
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @position = args[:position]
+    @moves = [NORTH, SOUTH, EAST, WEST]
+    @color = args[:color]
   end
-
 end
 
 class Bishop
-    #input
-  #output
 
-  def initialize
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @position = args[:position]
+    @moves = [NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @color = args[:color]
   end
-
-
 end
 
 class Queen
-    #input
-  #output
 
-  def initialize
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @color = args[:color]
+    @position = args[:position]
   end
 
 end
 
 class King
-    #input
-  #output
 
-  def initialize
+  attr_reader :color, :moves
+  attr_accessor :position
+
+  def initialize(args)
+    @postion = args[:position]
+    @color = color[:color]
+    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 
 end
@@ -83,6 +106,7 @@ class Board
 
   BOARD_HEIGHT = 8
   def initialize
+
   #output: make a nested array, @board that is BOARD_HEIGHT squared with all spaces = nil (default)
   #make white pieces and black pieces arrays fill with all possible pieces(make new objects) with default positions
   end
