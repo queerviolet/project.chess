@@ -28,11 +28,11 @@ class Pawn
     @first_move = true
 
     if @color == "white"
-      @moves = [north]
-      @attack = [northeast, northwest]
+      @moves = [NORTH]
+      @attack = [NORTHEAST, NORTHWEST]
     else
-      @moves = [south]
-      @attack = [southeast, southwest]
+      @moves = [SOUTH]
+      @attack = [SOUTHEAST, SOUTHWEST]
     end
 
   end
@@ -45,7 +45,7 @@ class Knight
   attr_accessor :position
 
   def initialize(args)
-    @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
+    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
     @color = args[:color]
     @position = args[:position]
   end
@@ -77,7 +77,7 @@ class Queen
   attr_accessor :position
 
   def initialize(args)
-    @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
+    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
     @color = args[:color]
     @position = args[:position]
   end
@@ -92,7 +92,7 @@ class King
   def initialize(args)
     @postion = args[:position]
     @color = color[:color]
-    @moves = [north, northeast, east, southeast, south, southwest, west, northwest]
+    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 
 end
