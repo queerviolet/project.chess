@@ -40,6 +40,10 @@ class Pawn
 end
 
 class Knight
+
+  attr_reader :color, :moves
+  attr_accessor :position
+
   def initialize(args)
     @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
     @color = args[:color]
@@ -68,6 +72,10 @@ class Bishop
 end
 
 class Queen
+
+  attr_reader :color, :moves
+  attr_accessor :position
+
   def initialize(args)
     @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
     @color = args[:color]
@@ -78,8 +86,8 @@ end
 
 class King
 
-  attr_reader :position, :color
-  attr_accessor :moves
+  attr_reader :color, :moves
+  attr_accessor :position
 
   def initialize(args)
     @postion = args[:position]
