@@ -39,23 +39,19 @@ class Knight
 end
 
 class Rook
-    #input
-  #output
-
-  def initialize
-    @position = position
+  def initialize(args)
+    @position = args[:position]
+    @moves = [north, south, east, west]
+    @color = args[:color]
   end
-
 end
 
 class Bishop
-    #input
-  #output
-
-  def initialize
+  def initialize(args)
+    @position = args[:position]
+    @moves = [northeast, northwest, southeast, southwest]
+    @color = args[:color]
   end
-
-
 end
 
 class Queen
