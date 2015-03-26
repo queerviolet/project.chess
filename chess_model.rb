@@ -40,13 +40,11 @@ class Pawn
 end
 
 class Knight
-    #input
-  #output
-
-  def initialize
+  def initialize(args)
+    @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
+    @color = args[:color]
+    @position = args[:position]
   end
-
-
 end
 
 class Rook
@@ -70,10 +68,10 @@ class Bishop
 end
 
 class Queen
-    #input
-  #output
-
-  def initialize
+  def initialize(args)
+    @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
+    @color = args[:color]
+    @position = args[:position]
   end
 
 end
