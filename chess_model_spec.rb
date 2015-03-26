@@ -25,3 +25,7 @@ end
 describe "King" do
 
 end
+
+describe "Rook" do
+
+end
