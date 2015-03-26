@@ -19,7 +19,6 @@ southwest = [-1, -1]
 
 class Pawn
 
-
   def initialize
     #argument hash
     #arguments: position, color, how_it_moves
@@ -79,6 +78,7 @@ class Board
 
   BOARD_HEIGHT = 8
   def initialize
+
   #output: make a nested array, @board that is BOARD_HEIGHT squared with all spaces = nil (default)
   #make white pieces and black pieces arrays fill with all possible pieces(make new objects) with default positions
   end
