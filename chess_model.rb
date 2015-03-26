@@ -7,23 +7,34 @@
 #speed chess
 #piece class?
 
-north = [1,0]
-south = [-1, 0]
-west = [0, -1]
-east = [0, 1]
-northeast = [1, 1]
-northwest = [1, -1]
-southeast = [-1. 1]
-southwest = [-1, -1]
+NORTH = [1,0]
+SOUTH = [-1, 0]
+WEST = [0, -1]
+EAST = [0, 1]
+NORTHEAST = [1, 1]
+NORTHWEST = [1, -1]
+SOUTHEAST = [-1. 1]
+SOUTHWEST = [-1, -1]
 
 
 class Pawn
 
+  attr_reader :color, :moves, :attack
+  attr_accessor :first_move, :position
 
-  def initialize
-    #argument hash
-    #arguments: position, color, how_it_moves
-    #first_move starts true
+  def initialize(args)
+    @postion = args[:position]
+    @color = color[:color]
+    @first_move = true
+
+    if @color == "white"
+      @moves = [north]
+      @attack = [northeast, northwest]
+    else
+      @moves = [south]
+      @attack = [southeast, southwest]
+    end
+
   end
 
 end
@@ -68,10 +79,14 @@ class Queen
 end
 
 class King
-    #input
-  #output
 
-  def initialize
+  attr_reader :position, :color
+  attr_accessor :moves
+
+  def initialize(args)
+    @postion = args[:position]
+    @color = color[:color]
+    @moves = [north, northeast, east, southeast, south, southwest, west, northwest]
   end
 
 end
