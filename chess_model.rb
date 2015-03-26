@@ -7,14 +7,14 @@
 #speed chess
 #piece class?
 
-north = [1,0]
-south = [-1, 0]
-west = [0, -1]
-east = [0, 1]
-northeast = [1, 1]
-northwest = [1, -1]
-southeast = [-1. 1]
-southwest = [-1, -1]
+NORTH = [1,0]
+SOUTH = [-1, 0]
+WEST = [0, -1]
+EAST = [0, 1]
+NORTHEAST = [1, 1]
+NORTHWEST = [1, -1]
+SOUTHEAST = [-1. 1]
+SOUTHWEST = [-1, -1]
 
 
 class Pawn
@@ -29,13 +29,11 @@ class Pawn
 end
 
 class Knight
-    #input
-  #output
-
-  def initialize
+  def initialize(args)
+    @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
+    @color = args[:color]
+    @position = args[:position]
   end
-
-
 end
 
 class Rook
@@ -59,10 +57,10 @@ class Bishop
 end
 
 class Queen
-    #input
-  #output
-
-  def initialize
+  def initialize(args)
+    @moves = [north, south, east, west, northeast, northwest, southeast, southwest]
+    @color = args[:color]
+    @position = args[:position]
   end
 
 end
