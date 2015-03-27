@@ -253,22 +253,6 @@ class Board
     rqb_move(piece) if piece.is_a?(Rook) || piece.is_a?(Queen) || piece.is_a?(Bishop)
   end
 
-  def rqb_move(piece)
-    valid_moves = []
-    move = 0
-    num_of_directions = piece.moves.length
-    num_of_directions.times do
-      temp_row = piece.position[0] + piece.moves[move][0]
-      temp_col = piece.position[1] + piece.moves[move][1]
-      return false if temp_row.between?(0,7) && temp_col.between?(0, 7)
-
-        if @board[temp_row][temp_col] == nil || @board[temp_row][temp_col].color != piece.color
-          valid_moves << [temp_row, temp_col]
-        end
-        move += 1
-      end
-    end
-    valid_moves
 
     #takes a direction and a current location and an array that defaults as empty
     #A. the spot being tested is off the board
@@ -284,9 +268,27 @@ class Board
     #false if the space != and piece is the same as the object it hits change directions
     #false if the space != nil and piece is the opposite of color push to array and change directions
     #false if the space is not in the array
+
+  def rqb_move(piece)
+    valid_moves = []
+    move = 0
+    num_of_directions = piece.moves.length
+    num_of_directions.times do
+      rqb_move_recursive(piece, piece.moves[move], temp_row = piece.position[0], temp_col = piece.position[1], valid_moves)
+      move += 1
+    end
+    valid_moves
   end
 
-  def rqb_move_recursive
+  def rqb_move_recursive(piece, direction, temp_row, temp_col, valid_moves)
+    temp_row += direction[0]
+    temp_col += direction[1]
+    return valid_moves if !temp_row.between?(0,7) && !temp_col.between?(0, 7)
+    return valid_moves if @board[temp_row][temp_col] != nil && @board[temp_row][temp_col].color == piece.color
+    byebug
+    valid_moves << [temp_row, temp_col]
+    return valid_moves if @board[temp_row][temp_col] != nil
+    rqb_move_recursive(piece, direction, temp_row, temp_col, valid_moves)
   end
 
   def king_move(piece)
@@ -339,5 +341,12 @@ class Board
 end
 
 
+board = Board.new
+
+args = {color: "white", position: [0,0]}
+
+queen = Queen.new(args)
+board.place(queen)
+p board.rqb_move(queen)
 
 
