@@ -295,22 +295,6 @@ class Board
     rqb_move(piece) if piece.is_a?(Rook) || piece.is_a?(Queen) || piece.is_a?(Bishop)
   end
 
-
-    #takes a direction and a current location and an array that defaults as empty
-    #A. the spot being tested is off the board
-    #B. the spot being tested has a piece in it push the array and then return false if different color. just return false if the same color.
-    #push the temp location to the array
-    #give the recursion the array, the spot being test and the direction. Do this for each of the directions.
-
-    #rook,queen,bishop
-    #input: object
-    #output: array of valid moves
-    #recursively check in all directions that correspond to the piece
-    #if space in path has no object, push to valid move array and then check again in that direction
-    #false if the space != and piece is the same as the object it hits change directions
-    #false if the space != nil and piece is the opposite of color push to array and change directions
-    #false if the space is not in the array
-
   def rqb_move(piece)
     valid_moves = []
     move = 0
@@ -325,12 +309,19 @@ class Board
   def rqb_move_recursive(piece, direction, temp_row, temp_col, valid_moves)
     temp_row += direction[0]
     temp_col += direction[1]
-    return valid_moves if !temp_row.between?(0,7) && !temp_col.between?(0, 7)
-    return valid_moves if @board[temp_row][temp_col] != nil && @board[temp_row][temp_col].color == piece.color
-    byebug
-    valid_moves << [temp_row, temp_col]
-    return valid_moves if @board[temp_row][temp_col] != nil
-    rqb_move_recursive(piece, direction, temp_row, temp_col, valid_moves)
+    return valid_moves if !temp_row .between?(0,7) || !temp_col.between?(0, 7)
+    if @board[temp_row][temp_col] == nil
+      valid_moves << [temp_row, temp_col]
+    else
+      if @board[temp_row][temp_col].color == piece.color
+        return valid_moves
+      else
+        valid_moves << [temp_row, temp_col]
+        return valid_moves
+      end
+    end
+    valid_moves = rqb_move_recursive(piece, direction, temp_row, temp_col, valid_moves)
+    return valid_moves
   end
 
   def king_move(piece)
@@ -381,4 +372,5 @@ class Board
   # end
 
 end
+
 
