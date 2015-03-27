@@ -241,16 +241,15 @@ class Board
   end
 
   def to_s
-    @board << [1,2,3,4,5,6,7,8].reverse
+    #puts [1,2,3,4,5,6,7,8].reverse
+    counter = 8
     @board.reverse.each do |row|
-      puts "\n"
+      print "#{counter}\s"
       row.each do |piece|
-        if piece.is_a? Fixnum
-          print piece
-        elsif piece.is_a?(Rook)
+        if piece.is_a?(Rook)
           print "\u265C\s"
         elsif piece.is_a?(Knight)
-          print "\u265A\s"
+          print "\u265E\s"
         elsif piece.is_a?(Bishop)
           print "\u265D\s"
         elsif piece.is_a?(Queen)
@@ -265,8 +264,11 @@ class Board
           print piece
         end
       end
+      #puts "#{counter}"
+      counter -= 1
+      puts "\n"
     end
-    puts "\n" + %w[a b c d e f g h].join(' ')
+    puts "\s" + "\s" + %w[a b c d e f g h].join(' ')
   end
 
 
