@@ -1,4 +1,4 @@
-#later:
+ #later:
 #castling
 #stalemate
 #check/check mate
@@ -6,15 +6,17 @@
 #undo_move
 #speed chess
 #piece class?
+require "byebug"
 
 NORTH = [1,0]
-SOUTH = [-1, 0]
-WEST = [0, -1]
-EAST = [0, 1]
 NORTHEAST = [1, 1]
-NORTHWEST = [1, -1]
+EAST = [0, 1]
 SOUTHEAST = [-1, 1]
+SOUTH = [-1, 0]
 SOUTHWEST = [-1, -1]
+WEST = [0, -1]
+NORTHWEST = [1, -1]
+
 
 
 class Pawn
@@ -45,8 +47,7 @@ class Knight
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
-    @moves = []
+    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 end
 
@@ -58,7 +59,7 @@ class Rook
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, SOUTH, EAST, WEST]
+    @moves = [NORTH, EAST, SOUTH, WEST]
   end
 end
 
@@ -70,7 +71,8 @@ class Bishop
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @moves = [NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST]
+
   end
 end
 
@@ -82,7 +84,7 @@ class Queen
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 end
 
@@ -101,7 +103,7 @@ end
 
 class Board
 
-  attr_accessor :board
+  attr_accessor :board, :white_pieces_array, :black_pieces_array
 
   def initialize
     @board = Array.new(8) {Array.new(8)}
@@ -117,7 +119,7 @@ class Board
         position: [1, x]
       }
       @white_pieces_array << Pawn.new(args)
-      end
+    end
 
     args = {
       color: "white",
@@ -171,11 +173,11 @@ class Board
   def initialize_black_pieces
     @black_pieces_array = []
     for x in 0..7 do
-    args = {
-      color: "black",
-      position: [6, x]
-    }
-    @black_pieces_array << Pawn.new(args)
+      args = {
+        color: "black",
+        position: [6, x]
+      }
+      @black_pieces_array << Pawn.new(args)
     end
     args = {
       color: "black",
@@ -237,8 +239,6 @@ class Board
   def place(piece, position)
     @board[position[0]][position[1]] = piece
     piece.position = position
-    #input: starting_position@white_piece_array[0], rook.position
-    #output: add this to @board(initially based off of default position)
   end
 
   def to_s
@@ -289,11 +289,15 @@ class Board
   end
 
   def check_move_helper(piece)
-    #input: object
-    #output: object, move method direction
+    pawn_move(piece) if piece.is_a?(Pawn)
+    king_move(piece) if piece.is_a?(King)
+    knight_move(piece) if piece.is_a?(Knight)
+    rqb_move(piece) if piece.is_a?(Rook) || piece.is_a?(Queen) || piece.is_a?(Bishop)
   end
 
-  def rqb_move
+  def rqb_move(piece)
+    valid_moves = []
+
     #rook,queen,bishop
     #input: object
     #output: array of valid moves
@@ -304,33 +308,51 @@ class Board
     #false if the space is not in the array
   end
 
-  def king_move
-    #input: object
-    #output: returns array of valid moves
-    #checks all 8 possibilities
+  def king_move(piece)
+    valid_moves = []
+    move = 0
+    num_of_directions = piece.moves.length
+    num_of_directions.times do
+      temp_row = piece.position[0] + piece.moves[move][0]
+      temp_col = piece.position[1] + piece.moves[move][1]
+      if temp_row.between?(0,7) && temp_col.between?(0, 7)
+        if @board[temp_row][temp_col] == nil || @board[temp_row][temp_col].color != piece.color
+          valid_moves << [temp_row, temp_col]
+        end
+        move += 1
+      end
+    end
+    valid_moves
+  end
+
+  def knight_move(piece)
+    valid_moves = []
 
   end
 
-  def knight_move
-  end
+  def pawn_move(piece)
+    #first jump first, second jump second
+    # valid_moves = []
+    # # if piece.first_move == true
+    # temp.position = piece.position
+    # temp_position[0] += moves[0][0]
+    # temp_position[1] += moves[0][1]
+    # if @board.temp_position == nil
+    #   valid_moves << []
 
-  def pawn_move
     #input: object
+
     #output: array of valid moves
     # if first_move is true, then check for two spaces as well set first_move to false
     #evaluate diagonals for enemy pieces
     #evaluate one space
   end
 
-  def move
-    #input: take piece
-    #output: return the changed board
-    #modifies the board_array and piece.position
-  end
+
+  # def move
+  #   #input: take piece
+  #   #output: return the changed board
+  #   #modifies the board_array and piece.position
+  # end
 
 end
-
-board1 = Board.new
-board1.set_up_board
-board1.to_s
-# p board1.board.reverse
