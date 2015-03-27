@@ -16,7 +16,6 @@ NORTHWEST = [1, -1]
 SOUTHEAST = [-1, 1]
 SOUTHWEST = [-1, -1]
 
-
 class Pawn
 
   attr_reader :color, :moves, :attack
@@ -100,7 +99,7 @@ end
 
 class Board
 
-  attr_accessor :board
+  attr_accessor :board, :white_pieces_array, :black_pieces_array
 
   def initialize
     @board = Array.new(8) {Array.new(8)}
@@ -288,4 +287,4 @@ end
 
 board1 = Board.new
 board1.set_up_board
-puts board1.board.reverse
+
