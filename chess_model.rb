@@ -235,6 +235,7 @@ class Board
 
   def place(piece, position)
     @board[position[0]][position[1]] = piece
+    piece.position = position
     #input: starting_position@white_piece_array[0], rook.position
     #output: add this to @board(initially based off of default position)
   end
