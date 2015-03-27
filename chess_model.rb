@@ -240,6 +240,54 @@ class Board
     #output: add this to @board(initially based off of default position)
   end
 
+  def to_s
+    @board << [1,2,3,4,5,6,7,8].reverse
+    @board.reverse.each do |row|
+      puts "\n"
+      row.each do |piece|
+        if piece.is_a? Fixnum
+          print piece
+        elsif piece.is_a?(Rook)
+          print "\u265C\s"
+        elsif piece.is_a?(Knight)
+          print "\u265A\s"
+        elsif piece.is_a?(Bishop)
+          print "\u265D\s"
+        elsif piece.is_a?(Queen)
+          print "\u265B\s"
+        elsif piece.is_a?(King)
+          print "\u265A\s"
+        elsif piece.is_a?(Pawn)
+          print "\u265F\s"
+        elsif piece == nil
+          print ". "
+        else
+          print piece
+        end
+      end
+    end
+    puts "\n" + %w[a b c d e f g h].join(' ')
+  end
+
+
+
+# b_king ="\u265A"
+# b_queen ="\u265B"
+# b_rook ="\u265C"
+# b_bishop="\u265D"
+# b_knight ="\u265E"
+# b_pawn ="\u265F"
+
+# w_king = "\u2654"
+# w_queen = "\u2655"
+# w_rook = "\u2656"
+# w_bishop = "\u2657"
+# w_knight = "\u2658"
+# w_pawn = "\u2659"
+
+
+
+
   def get_object_from_position
     #input: position in array
     #output: the object in that position
@@ -289,4 +337,5 @@ end
 
 board1 = Board.new
 board1.set_up_board
-puts board1.board.reverse
+board1.to_s
+# p board1.board.reverse
