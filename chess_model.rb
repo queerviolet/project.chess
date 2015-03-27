@@ -115,117 +115,31 @@ class Board
   def initialize_white_pieces
     @white_pieces_array = []
     for x in 0..7 do
-      args = {
-        color: "white",
-        position: [1, x]
-      }
-      @white_pieces_array << Pawn.new(args)
+      @white_pieces_array << Pawn.new({color: "white", position: [1, x]})
     end
-
-    args = {
-      color: "white",
-      position: [0, 0]
-    }
-    @white_pieces_array << Rook.new(args)
-
-    args = {
-      color: "white",
-      position: [0,7]
-    }
-    @white_pieces_array << Rook.new(args)
-
-    args = {
-      color: "white",
-      position: [0,2]
-    }
-    @white_pieces_array << Bishop.new(args)
-
-    args = {
-      color: "white",
-      position: [0,5]
-    }
-    @white_pieces_array << Bishop.new(args)
-
-
-    args = {
-      color: "white",
-      position: [0,1]
-    }
-    @white_pieces_array << Knight.new(args)
-
-    args = {
-      color: "white",
-      position: [0,6]
-    }
-    @white_pieces_array << Knight.new(args)
-
-    args = {
-      color: "white",
-      position: [0,3]
-    }
-    @white_pieces_array << Queen.new(args)
-    args = {
-      color: "white",
-      position: [0,4]
-    }
-    @white_pieces_array << King.new(args)
+    @white_pieces_array << Rook.new({color: "white", position: [0, 0]})
+    @white_pieces_array << Rook.new({color: "white", position: [0,7]})
+    @white_pieces_array << Bishop.new({color: "white", position: [0,2]})
+    @white_pieces_array << Bishop.new({color: "white", position: [0,5]})
+    @white_pieces_array << Knight.new({color: "white", position: [0,1]})
+    @white_pieces_array << Knight.new({color: "white", position: [0,6]})
+    @white_pieces_array << Queen.new({color: "white", position: [0,3]})
+    @white_pieces_array << King.new({color: "white", position: [0,4]})
   end
 
   def initialize_black_pieces
     @black_pieces_array = []
     for x in 0..7 do
-      args = {
-        color: "black",
-        position: [6, x]
-      }
-      @black_pieces_array << Pawn.new(args)
+      @black_pieces_array << Pawn.new({color: "black", position: [6, x]})
     end
-    args = {
-      color: "black",
-      position: [7, 0]
-    }
-    @black_pieces_array << Rook.new(args)
-
-    args = {
-      color: "black",
-      position: [7,7]
-    }
-    @black_pieces_array << Rook.new(args)
-    args = {
-      color: "black",
-      position: [7,2]
-    }
-    @black_pieces_array << Bishop.new(args)
-
-    args = {
-      color: "black",
-      position: [7,5]
-    }
-    @black_pieces_array << Bishop.new(args)
-
-    args = {
-      color: "black",
-      position: [7,1]
-    }
-    @black_pieces_array << Knight.new(args)
-
-    args = {
-      color: "black",
-      position: [7,6]
-    }
-    @black_pieces_array << Knight.new(args)
-
-    args = {
-      color: "black",
-      position: [7,3]
-    }
-    @black_pieces_array << Queen.new(args)
-
-    args = {
-      color: "black",
-      position: [7,4]
-    }
-    @black_pieces_array << King.new(args)
+    @black_pieces_array << Rook.new({color: "black", position: [7, 0]})
+    @black_pieces_array << Rook.new({color: "black", position: [7, 7]})
+    @black_pieces_array << Bishop.new({color: "black", position: [7,2]})
+    @black_pieces_array << Bishop.new({color: "black", position: [7,5]})
+    @black_pieces_array << Knight.new({color: "black", position: [7,1]})
+    @black_pieces_array << Knight.new({color: "black", position: [7,6]})
+    @black_pieces_array << Queen.new({color: "black", position: [7,3]})
+    @black_pieces_array << King.new({color: "black", position: [7,4]})
   end
 
   def set_up_board
@@ -360,8 +274,24 @@ class Board
   end
 
   def pawn_move(piece)
-    #first jump first, second jump second
     # valid_moves = []
+    # temp_row = piece.position[0] + piece.moves[move][0]
+    # temp_col = piece.position[1] + piece.moves[move][1]
+    # if temp_row.between?(0,7) && temp_col.between?(0, 7)
+    #     if @board[temp_row][temp_col] == nil
+    #       valid_moves << [temp_row, temp_col]
+    #     end
+    #     move += 1
+    #   end
+    # end
+    # valid_moves
+    # if piece.first_move == true
+
+    #   #input an object
+    #   #output an array
+
+    #first jump first, second jump second
+    #
     # # if piece.first_move == true
     # temp.position = piece.position
     # temp_position[0] += moves[0][0]
@@ -387,8 +317,9 @@ class Board
 end
 
 
-# game = Board.new
-# game.to_s
+game = Board.new
+game.set_up_board
+game.to_s
 # knight = Knight.new(color:"black", position: [0,0])
 # p game.place(knight,knight.position)
 # game.to_s
