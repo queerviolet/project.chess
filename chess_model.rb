@@ -13,7 +13,7 @@ WEST = [0, -1]
 EAST = [0, 1]
 NORTHEAST = [1, 1]
 NORTHWEST = [1, -1]
-SOUTHEAST = [-1. 1]
+SOUTHEAST = [-1, 1]
 SOUTHWEST = [-1, -1]
 
 
@@ -23,8 +23,8 @@ class Pawn
   attr_accessor :first_move, :position
 
   def initialize(args)
-    @postion = args[:position]
-    @color = color[:color]
+    @position = args[:position]
+    @color = args[:color]
     @first_move = true
 
     if @color == "white"
@@ -43,9 +43,9 @@ class Knight
   attr_accessor :position
 
   def initialize(args)
-    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
-    @color = args[:color]
     @position = args[:position]
+    @color = args[:color]
+    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
   end
 end
 
@@ -56,8 +56,8 @@ class Rook
 
   def initialize(args)
     @position = args[:position]
-    @moves = [NORTH, SOUTH, EAST, WEST]
     @color = args[:color]
+    @moves = [NORTH, SOUTH, EAST, WEST]
   end
 end
 
@@ -68,8 +68,8 @@ class Bishop
 
   def initialize(args)
     @position = args[:position]
-    @moves = [NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
     @color = args[:color]
+    @moves = [NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
   end
 end
 
@@ -79,11 +79,10 @@ class Queen
   attr_accessor :position
 
   def initialize(args)
-    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
-    @color = args[:color]
     @position = args[:position]
+    @color = args[:color]
+    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
   end
-
 end
 
 class King
@@ -92,28 +91,152 @@ class King
   attr_accessor :position
 
   def initialize(args)
-    @postion = args[:position]
-    @color = color[:color]
+    @position = args[:position]
+    @color = args[:color]
     @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 
 end
 
-
-
-
 class Board
 
-  BOARD_HEIGHT = 8
-  def initialize
+  attr_accessor :board
 
-  #output: make a nested array, @board that is BOARD_HEIGHT squared with all spaces = nil (default)
-  #make white pieces and black pieces arrays fill with all possible pieces(make new objects) with default positions
+  def initialize
+    @board = Array.new(8) {Array.new(8)}
+    initialize_white_pieces
+    initialize_black_pieces
   end
 
-  def place(piece, position = piece.position)
-  #input: starting_position@white_piece_array[0], rook.position
-  #output: add this to @board(initially based off of default position)
+  def initialize_white_pieces
+    @white_pieces_array = []
+    for x in 0..7 do
+      args = {
+        color: "white",
+        position: [1, x]
+      }
+      @white_pieces_array << Pawn.new(args)
+      end
+
+    args = {
+      color: "white",
+      position: [0, 0]
+    }
+    @white_pieces_array << Rook.new(args)
+
+    args = {
+      color: "white",
+      position: [0,7]
+    }
+    @white_pieces_array << Rook.new(args)
+
+    args = {
+      color: "white",
+      position: [0,2]
+    }
+    @white_pieces_array << Bishop.new(args)
+
+    args = {
+      color: "white",
+      position: [0,5]
+    }
+    @white_pieces_array << Bishop.new(args)
+
+
+    args = {
+      color: "white",
+      position: [0,1]
+    }
+    @white_pieces_array << Knight.new(args)
+
+    args = {
+      color: "white",
+      position: [0,6]
+    }
+    @white_pieces_array << Knight.new(args)
+
+    args = {
+      color: "white",
+      position: [0,3]
+    }
+    @white_pieces_array << Queen.new(args)
+    args = {
+      color: "white",
+      position: [0,4]
+    }
+    @white_pieces_array << King.new(args)
+  end
+
+  def initialize_black_pieces
+    @black_pieces_array = []
+    for x in 0..7 do
+    args = {
+      color: "black",
+      position: [6, x]
+    }
+    @black_pieces_array << Pawn.new(args)
+    end
+    args = {
+      color: "black",
+      position: [7, 0]
+    }
+    @black_pieces_array << Rook.new(args)
+
+    args = {
+      color: "black",
+      position: [7,7]
+    }
+    @black_pieces_array << Rook.new(args)
+    args = {
+      color: "black",
+      position: [7,2]
+    }
+    @black_pieces_array << Bishop.new(args)
+
+    args = {
+      color: "black",
+      position: [7,5]
+    }
+    @black_pieces_array << Bishop.new(args)
+
+    args = {
+      color: "black",
+      position: [7,1]
+    }
+    @black_pieces_array << Knight.new(args)
+
+    args = {
+      color: "black",
+      position: [7,6]
+    }
+    @black_pieces_array << Knight.new(args)
+
+    args = {
+      color: "black",
+      position: [7,3]
+    }
+    @black_pieces_array << Queen.new(args)
+
+    args = {
+      color: "black",
+      position: [7,4]
+    }
+    @black_pieces_array << King.new(args)
+  end
+
+  def set_up_board
+    @white_pieces_array.each do |piece|
+      place(piece, piece.position)
+    end
+    @black_pieces_array.each do |piece|
+      place(piece, piece.position)
+    end
+  end
+
+  def place(piece, position)
+    @board[position[0]][position[1]] = piece
+    #input: starting_position@white_piece_array[0], rook.position
+    #output: add this to @board(initially based off of default position)
   end
 
   def get_object_from_position
@@ -137,11 +260,14 @@ class Board
     #false if the space is not in the array
   end
 
-  def kk_move
+  def king_move
     #input: object
     #output: returns array of valid moves
     #checks all 8 possibilities
 
+  end
+
+  def knight_move
   end
 
   def pawn_move
@@ -159,3 +285,7 @@ class Board
   end
 
 end
+
+board1 = Board.new
+board1.set_up_board
+puts board1.board.reverse
