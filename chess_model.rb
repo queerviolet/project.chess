@@ -16,7 +16,6 @@ NORTHWEST = [1, -1]
 SOUTHEAST = [-1, 1]
 SOUTHWEST = [-1, -1]
 
-
 class Pawn
 
   attr_reader :color, :moves, :attack
@@ -100,7 +99,7 @@ end
 
 class Board
 
-  attr_accessor :board
+  attr_accessor :board, :white_pieces_array, :black_pieces_array
 
   def initialize
     @board = Array.new(8) {Array.new(8)}
@@ -236,8 +235,6 @@ class Board
   def place(piece, position)
     @board[position[0]][position[1]] = piece
     piece.position = position
-    #input: starting_position@white_piece_array[0], rook.position
-    #output: add this to @board(initially based off of default position)
   end
 
   def get_object_from_position
@@ -294,4 +291,3 @@ class Board
   end
 
 end
-
