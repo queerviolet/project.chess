@@ -289,5 +289,4 @@ class Board
     #output: return the changed board
     #modifies the board_array and piece.position
   end
-
 end
