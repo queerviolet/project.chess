@@ -23,7 +23,7 @@ class Pawn
   attr_accessor :first_move, :position
 
   def initialize(args)
-    @postion = args[:position]
+    @position = args[:position]
     @color = args[:color]
     @first_move = true
 
@@ -91,7 +91,7 @@ class King
   attr_accessor :position
 
   def initialize(args)
-    @postion = args[:position]
+    @position = args[:position]
     @color = args[:color]
     @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
@@ -99,6 +99,8 @@ class King
 end
 
 class Board
+
+  attr_accessor :board
 
   def initialize
     @board = Array.new(8) {Array.new(8)}
@@ -222,7 +224,17 @@ class Board
     @black_pieces_array << King.new(args)
   end
 
-  def place(piece, position = piece.position)
+  def set_up_board
+    @white_pieces_array.each do |piece|
+      place(piece, piece.position)
+    end
+    @black_pieces_array.each do |piece|
+      place(piece, piece.position)
+    end
+  end
+
+  def place(piece, position)
+    @board[position[0]][position[1]] = piece
     #input: starting_position@white_piece_array[0], rook.position
     #output: add this to @board(initially based off of default position)
   end
@@ -274,4 +286,6 @@ class Board
 
 end
 
-board = Board.new
+board1 = Board.new
+board1.set_up_board
+puts board1.board.reverse
