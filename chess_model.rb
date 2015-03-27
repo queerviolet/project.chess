@@ -241,30 +241,40 @@ class Board
   end
 
   def to_s
-    #puts [1,2,3,4,5,6,7,8].reverse
     counter = 8
     @board.reverse.each do |row|
       print "#{counter}\s"
       row.each do |piece|
-        if piece.is_a?(Rook)
+        if piece.is_a?(Rook) && piece.color == "black"
           print "\u265C\s"
-        elsif piece.is_a?(Knight)
+        elsif piece.is_a?(Rook) && piece.color == "white"
+          print "\u2656\s"
+        elsif piece.is_a?(Knight) && piece.color == "black"
           print "\u265E\s"
-        elsif piece.is_a?(Bishop)
+        elsif piece.is_a?(Knight) && piece.color == "white"
+          print "\u2658\s"
+        elsif piece.is_a?(Bishop) && piece.color == "black"
           print "\u265D\s"
-        elsif piece.is_a?(Queen)
+        elsif piece.is_a?(Bishop) && piece.color == "white"
+          print "\u2657\s"
+        elsif piece.is_a?(Queen) && piece.color == "black"
           print "\u265B\s"
-        elsif piece.is_a?(King)
+        elsif piece.is_a?(Queen) && piece.color == "white"
+          print "\u2655\s"
+        elsif piece.is_a?(King) && piece.color == "black"
           print "\u265A\s"
-        elsif piece.is_a?(Pawn)
+        elsif piece.is_a?(King) && piece.color == "white"
+          print "\u2654\s"
+        elsif piece.is_a?(Pawn) && piece.color == "black"
           print "\u265F\s"
+        elsif piece.is_a?(Pawn) && piece.color == "white"
+          print "\u2659\s"
         elsif piece == nil
           print ". "
         else
           print piece
         end
       end
-      #puts "#{counter}"
       counter -= 1
       puts "\n"
     end
