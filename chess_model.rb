@@ -255,6 +255,26 @@ class Board
 
   def rqb_move(piece)
     valid_moves = []
+    move = 0
+    num_of_directions = piece.moves.length
+    num_of_directions.times do
+      temp_row = piece.position[0] + piece.moves[move][0]
+      temp_col = piece.position[1] + piece.moves[move][1]
+      return false if temp_row.between?(0,7) && temp_col.between?(0, 7)
+
+        if @board[temp_row][temp_col] == nil || @board[temp_row][temp_col].color != piece.color
+          valid_moves << [temp_row, temp_col]
+        end
+        move += 1
+      end
+    end
+    valid_moves
+
+    #takes a direction and a current location and an array that defaults as empty
+    #A. the spot being tested is off the board
+    #B. the spot being tested has a piece in it push the array and then return false if different color. just return false if the same color.
+    #push the temp location to the array
+    #give the recursion the array, the spot being test and the direction. Do this for each of the directions.
 
     #rook,queen,bishop
     #input: object
@@ -264,6 +284,9 @@ class Board
     #false if the space != and piece is the same as the object it hits change directions
     #false if the space != nil and piece is the opposite of color push to array and change directions
     #false if the space is not in the array
+  end
+
+  def rqb_move_recursive
   end
 
   def king_move(piece)
