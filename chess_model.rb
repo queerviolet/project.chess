@@ -1,4 +1,4 @@
-#later:
+ #later:
 #castling
 #stalemate
 #check/check mate
@@ -243,11 +243,14 @@ class Board
   end
 
   def check_move_helper(piece)
-    #input: object
-    #output: object, move method direction
+    pawn_move(piece) if piece.is_a?(Pawn)
+    king_move(piece) if piece.is_a?(King)
+    knight_move(piece) if piece.is_a?(Knight)
+    rqb_move(piece) if piece.is_a?(Rook) || piece.is_a?(Queen) || piece.is_a?(Bishop)
   end
 
-  def rqb_move
+  def rqb_move(piece)
+
     #rook,queen,bishop
     #input: object
     #output: array of valid moves
@@ -258,18 +261,23 @@ class Board
     #false if the space is not in the array
   end
 
-  def king_move
+  def king_move(piece)
+
     #input: object
     #output: returns array of valid moves
     #checks all 8 possibilities
 
   end
 
-  def knight_move
+  def knight_move(piece)
+
+
   end
 
-  def pawn_move
+  def pawn_move(piece)
+    valid_moves = []
     #input: object
+
     #output: array of valid moves
     # if first_move is true, then check for two spaces as well set first_move to false
     #evaluate diagonals for enemy pieces
@@ -283,7 +291,3 @@ class Board
   end
 
 end
-
-board1 = Board.new
-board1.set_up_board
-
