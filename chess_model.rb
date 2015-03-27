@@ -47,7 +47,8 @@ class Knight
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
+    # @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
+    @moves = [[2,1],[1,2],[2,-1],[1,-2],[-2,-1],[-1,-2],[-2,1],[-1,2]]
   end
 end
 
@@ -343,7 +344,19 @@ class Board
 
   def knight_move(piece)
     valid_moves = []
-
+    move = 0
+    num_of_directions = piece.moves.length #8
+    num_of_directions.times do
+      temp_row = piece.position[0] + piece.moves[move][0] #[0][0] row [1][0]
+      temp_col = piece.position[1] + piece.moves[move][1] #[0][1] col [1][1]
+      if temp_row.between?(0,7) && temp_col.between?(0, 7)
+        if @board[temp_row][temp_col] == nil || @board[temp_row][temp_col].color != piece.color
+          valid_moves << [temp_row, temp_col]
+        end
+        move += 1
+      end
+    end
+    valid_moves
   end
 
   def pawn_move(piece)
@@ -374,3 +387,11 @@ class Board
 end
 
 
+# game = Board.new
+# game.to_s
+# knight = Knight.new(color:"black", position: [0,0])
+# p game.place(knight,knight.position)
+# game.to_s
+# p game.knight_move(knight)
+# p game.place(knight,[2,1])
+# game.to_s
