@@ -47,7 +47,6 @@ class Knight
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    # @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
     @moves = [[2,1],[1,2],[2,-1],[1,-2],[-2,-1],[-1,-2],[-2,1],[-1,2]]
   end
 end
@@ -197,12 +196,6 @@ class Board
     puts "\s" + "\s" + %w[a b c d e f g h].join(' ')
   end
 
-
-  def get_object_from_position
-    #input: position in array
-    #output: the object in that position
-  end
-
   def check_move_helper(piece)
     pawn_move(piece) if piece.is_a?(Pawn)
     king_move(piece) if piece.is_a?(King)
@@ -273,15 +266,6 @@ class Board
     valid_moves
   end
 
-  # def pawn_move_helper(piece, location, valid_moves)
-  #   temp_row = location[0] + piece.moves[0][0]
-  #   temp_col = location[1] + piece.moves[0][1]
-  #   if temp_row.between?(0,7) && temp_col.between?(0, 7) && @board[temp_row][temp_col] == nil
-  #     valid_moves << [temp_row, temp_col]
-  #   end
-  #   valid_moves
-  # end
-
   def pawn_move(piece)
     valid_moves = []
     temp_row = piece.position[0] + piece.moves[0][0]
@@ -304,80 +288,7 @@ class Board
       end
     end
     valid_moves
-
-
-    # valid_moves = pawn_move_helper(piece, piece.position, valid_moves)
-    # if piece.first_move == true
-    #   piece.first_move = false
-    #   temp_row = piece.position[0] + (2*piece.moves[0][0])
-    #   temp_col = piece.position[1] + (2*piece.moves[0][1])
-    #   pawn_move_helper(piece, [temp_row, temp_col], valid_moves)
-    # end
-
-    # temp_row = piece.position[0] + piece.moves[move][0]
-    # temp_col = piece.position[1] + piece.moves[move][1]
-
-    #     if @board[temp_row][temp_col] == nil
-    #       valid_moves << [temp_row, temp_col]
-    #     end
-    #   end
-    # end
-    # valid_moves
-
-
-      #input an object
-      #output an array
-
-    # first jump first, second jump second
-
-    # if piece.first_move == true
-    # temp.position = piece.position
-    # temp_position[0] += moves[0][0]
-    # temp_position[1] += moves[0][1]
-    # if @board.temp_position == nil
-    #   valid_moves << []
-
-    #input: object
-
-    #output: array of valid moves
-    # if first_move is true, then check for two spaces as well set first_move to false
-    #evaluate diagonals for enemy pieces
-    #evaluate one space
   end
-
-
-  # def move
-  #   #input: take piece
-  #   #output: return the changed board
-  #   #modifies the board_array and piece.position
-  # end
 
 end
 
-
-game = Board.new
-# game.set_up_board
-
-pawn = Pawn.new({color: "white", position: [0,1]})
-game.place(pawn, pawn.position)
-
-pawn1 = Pawn.new({color: "white", position: [1,0]})
-
-game.place(pawn1, pawn1.position)
-
-pawn2 = Pawn.new({color: "black", position: [1,2]})
-
-game.place(pawn2, pawn2.position)
-
-
-
-game.to_s
-p game.pawn_move(pawn)
-
-
-# knight = Knight.new(color:"black", position: [0,0])
-# p game.place(knight,knight.position)
-# game.to_s
-# p game.knight_move(knight)
-# p game.place(knight,[2,1])
-# game.to_s
