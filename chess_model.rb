@@ -273,26 +273,64 @@ class Board
     valid_moves
   end
 
+  # def pawn_move_helper(piece, location, valid_moves)
+  #   temp_row = location[0] + piece.moves[0][0]
+  #   temp_col = location[1] + piece.moves[0][1]
+  #   if temp_row.between?(0,7) && temp_col.between?(0, 7) && @board[temp_row][temp_col] == nil
+  #     valid_moves << [temp_row, temp_col]
+  #   end
+  #   valid_moves
+  # end
+
   def pawn_move(piece)
-    # valid_moves = []
+    valid_moves = []
+    temp_row = piece.position[0] + piece.moves[0][0]
+    temp_col = piece.position[1] + piece.moves[0][1]
+    if temp_row.between?(0,7) && temp_col.between?(0, 7) && @board[temp_row][temp_col] == nil
+      valid_moves << [temp_row, temp_col]
+      if piece.first_move == true
+        temp_row += piece.moves[0][0]
+        temp_col += piece.moves[0][1]
+        if temp_row.between?(0,7) && temp_col.between?(0, 7) && @board[temp_row][temp_col] == nil
+          valid_moves << [temp_row, temp_col]
+        end
+      end
+    end
+    for x in 0..1 do
+      temp_row = piece.position[0] + piece.attack[x][0]
+      temp_col = piece.position[1] + piece.attack[x][1]
+      if temp_row.between?(0,7) && temp_col.between?(0, 7) && @board[temp_row][temp_col] != nil && @board[temp_row][temp_col].color != piece.color
+        valid_moves << [temp_row, temp_col]
+      end
+    end
+    valid_moves
+
+
+    # valid_moves = pawn_move_helper(piece, piece.position, valid_moves)
+    # if piece.first_move == true
+    #   piece.first_move = false
+    #   temp_row = piece.position[0] + (2*piece.moves[0][0])
+    #   temp_col = piece.position[1] + (2*piece.moves[0][1])
+    #   pawn_move_helper(piece, [temp_row, temp_col], valid_moves)
+    # end
+
     # temp_row = piece.position[0] + piece.moves[move][0]
     # temp_col = piece.position[1] + piece.moves[move][1]
-    # if temp_row.between?(0,7) && temp_col.between?(0, 7)
+
     #     if @board[temp_row][temp_col] == nil
     #       valid_moves << [temp_row, temp_col]
     #     end
-    #     move += 1
     #   end
     # end
     # valid_moves
+
+
+      #input an object
+      #output an array
+
+    # first jump first, second jump second
+
     # if piece.first_move == true
-
-    #   #input an object
-    #   #output an array
-
-    #first jump first, second jump second
-    #
-    # # if piece.first_move == true
     # temp.position = piece.position
     # temp_position[0] += moves[0][0]
     # temp_position[1] += moves[0][1]
@@ -318,8 +356,25 @@ end
 
 
 game = Board.new
-game.set_up_board
+# game.set_up_board
+
+pawn = Pawn.new({color: "white", position: [0,1]})
+game.place(pawn, pawn.position)
+
+pawn1 = Pawn.new({color: "white", position: [1,0]})
+
+game.place(pawn1, pawn1.position)
+
+pawn2 = Pawn.new({color: "black", position: [1,2]})
+
+game.place(pawn2, pawn2.position)
+
+
+
 game.to_s
+p game.pawn_move(pawn)
+
+
 # knight = Knight.new(color:"black", position: [0,0])
 # p game.place(knight,knight.position)
 # game.to_s
