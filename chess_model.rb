@@ -6,7 +6,7 @@
 #undo_move
 #speed chess
 #piece class?
-
+require "byebug"
 NORTH = [1,0]
 SOUTH = [-1, 0]
 WEST = [0, -1]
@@ -115,7 +115,7 @@ class Board
         position: [1, x]
       }
       @white_pieces_array << Pawn.new(args)
-      end
+    end
 
     args = {
       color: "white",
@@ -169,11 +169,11 @@ class Board
   def initialize_black_pieces
     @black_pieces_array = []
     for x in 0..7 do
-    args = {
-      color: "black",
-      position: [6, x]
-    }
-    @black_pieces_array << Pawn.new(args)
+      args = {
+        color: "black",
+        position: [6, x]
+      }
+      @black_pieces_array << Pawn.new(args)
     end
     args = {
       color: "black",
@@ -250,6 +250,7 @@ class Board
   end
 
   def rqb_move(piece)
+    valid_moves = []
 
     #rook,queen,bishop
     #input: object
@@ -262,20 +263,37 @@ class Board
   end
 
   def king_move(piece)
-
-    #input: object
-    #output: returns array of valid moves
-    #checks all 8 possibilities
-
+    valid_moves = []
+    move = 0
+    num_of_directions = piece.moves.length
+    num_of_directions.times do
+      temp_row = piece.position[0] + piece.moves[move][0]
+      temp_col = piece.position[1] + piece.moves[move][1]
+      if temp_row.between?(0,7) && temp_col.between?(0, 7)
+        if @board[temp_row][temp_col] == nil || @board[temp_row][temp_col].color != piece.color
+          valid_moves << [temp_row, temp_col]
+        end
+        move += 1
+      end
+    end
+    valid_moves
   end
 
   def knight_move(piece)
-
+    valid_moves = []
 
   end
 
   def pawn_move(piece)
-    valid_moves = []
+    #first jump first, second jump second
+    # valid_moves = []
+    # # if piece.first_move == true
+    # temp.position = piece.position
+    # temp_position[0] += moves[0][0]
+    # temp_position[1] += moves[0][1]
+    # if @board.temp_position == nil
+    #   valid_moves << []
+
     #input: object
 
     #output: array of valid moves
@@ -284,9 +302,15 @@ class Board
     #evaluate one space
   end
 
-  def move
-    #input: take piece
-    #output: return the changed board
-    #modifies the board_array and piece.position
-  end
+
+  # def move
+  #   #input: take piece
+  #   #output: return the changed board
+  #   #modifies the board_array and piece.position
+  # end
+
 end
+
+
+
+
