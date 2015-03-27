@@ -245,7 +245,7 @@ class Board
     #output: the object in that position
   end
 
-  def check_move_helper
+  def check_move_helper(piece)
     #input: object
     #output: object, move method direction
   end
