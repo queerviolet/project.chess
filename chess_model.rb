@@ -7,14 +7,17 @@
 #speed chess
 #piece class?
 require "byebug"
+
 NORTH = [1,0]
-SOUTH = [-1, 0]
-WEST = [0, -1]
-EAST = [0, 1]
 NORTHEAST = [1, 1]
-NORTHWEST = [1, -1]
+EAST = [0, 1]
 SOUTHEAST = [-1, 1]
+SOUTH = [-1, 0]
 SOUTHWEST = [-1, -1]
+WEST = [0, -1]
+NORTHWEST = [1, -1]
+
+
 
 class Pawn
 
@@ -44,7 +47,7 @@ class Knight
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 end
 
@@ -56,7 +59,7 @@ class Rook
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, SOUTH, EAST, WEST]
+    @moves = [NORTH, EAST, SOUTH, WEST]
   end
 end
 
@@ -68,7 +71,8 @@ class Bishop
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @moves = [NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST]
+
   end
 end
 
@@ -80,7 +84,7 @@ class Queen
   def initialize(args)
     @position = args[:position]
     @color = args[:color]
-    @moves = [NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST]
+    @moves = [NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST]
   end
 end
 
