@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'matrix'
+
 require_relative './piece'
 
 class Chessboard
@@ -20,7 +22,7 @@ class Chessboard
     self[CLASSIC_LAYOUT]
   end
 
-  # layout is like STD_LAYOUT
+  # layout is like CLASSIC_LAYOUT
   def self.[](layout)
     height = layout.length
     width = layout[0].length
@@ -41,31 +43,48 @@ class Chessboard
     pieces.each { |pos, piece| piece.square = self[*pos] }
   end
 
-  def [](row, col)
-    ChessSquare.new(self, row, col)
+  def [](row_or_str, col=nil)
+    return ChessSquare.parse(self, row_or_str.to_s) unless col
+    ChessSquare.new(self, [row_or_str, col])
   end
 
-  def to_s
-    (0..height - 1).map do |r|
+  def to_s(opts={})
+    axes = opts[:axes].nil?? false : opts[:axes]
+    unlabeled = (0..height - 1).map do |r|
       (0..width - 1).map do |c|
+        label = (axes && c == 0)? self[r, c].alg_row_s : ''
         if self[r, c].piece
-          " #{self[r, c].piece.symbol} "
+          label + " #{self[r, c].piece.symbol} "
         else
-          "   "
+          label + "   "
         end
       end.join
     end.join("\n")
+    return unlabeled unless axes
+    col_labels = (0..width - 1).map { |c| " #{self[0, c].alg_col_s} " }.join
+    unlabeled + "\n " + col_labels
   end
 end
 
 class ChessSquare
-  attr_reader :board, :row, :col
-  def initialize(board, row, col)
-    @board, @row, @col = board, row, col
+  def self.parse(board, algebraic)
+    match = /([a-z])\s*([0-9]+)/.match(algebraic.strip)
+    unless match
+      raise Exception.new("Invalid algebraic: #{algebraic}") 
+    end
+    col = match[1].bytes[0] - 'a'.bytes[0]
+    row = board.height - match[2].to_i
+    new(board, [row, col])
+  end
+
+  attr_reader :board, :pos
+
+  def initialize(board, pos)
+    @board, @pos = board, Vector[*pos]
   end
 
   def valid?
-    row > 0 && row < board.height && col > 0 && col < board.width
+    row >= 0 && row < board.height && col >= 0 && col < board.width
   end
 
   def piece
@@ -76,16 +95,60 @@ class ChessSquare
     piece == nil
   end
 
-  def +((dr, dc))
-    board[row + dr, col + dc]
+  def die!
+    if piece
+      piece.square = nil
+      board.pieces.delete([row ,col])
+    end
+  end
+
+  def +(vec)
+    board[*(pos + vec)]
+  end
+
+  def row
+    pos[0]
+  end
+
+  def col
+    pos[1]
+  end
+
+  def alg_col_s
+    "#{('a'..'z').to_a[col]}"
+  end
+
+  def alg_row_s
+    "#{board.height - row}"
   end
 
   def to_s
-    "#{('a'..'z').to_a[row]}#{board.height - col}"
+    alg_col_s + alg_row_s
+  end
+
+  def ==(other)
+    pos == other.pos && board == other.board
+  end
+
+  def threatened
+    board.pieces.values.flat_map(&:moves).select do |move|
+      move[:capture] == self
+    end
   end
 end
 
 if __FILE__ == $0
-  puts Chessboard.classic
-  puts Chessboard.classic[0,0]
+  board = Chessboard.classic  
+  puts board.to_s(axes: true)
+  puts "a8:"
+  board[:a8].piece.moves.each { |m| puts m[:to] }
+  puts "a7:"
+  board[:a7].piece.moves.each { |m| puts m[:to] }
+  board[:a7].die!
+  puts "a8 after a7 death:"
+  board[:a8].piece.moves.each { |m| puts m[:to] }
+  puts "threatening #{board[:a3]}:"
+  board[:a3].threatened.each { |t| puts t[:piece].describe }
+  puts "threatening: #{board[:b4]}"
+  board[:b4].threatened.each { |t| puts t[:piece].describe }
 end
