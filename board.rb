@@ -7,7 +7,8 @@ require_relative './piece'
 class Chessboard
   attr_reader :pieces, :width, :height
 
-  CLASSIC_LAYOUT = [
+  # Board layouts
+  CLASSIC = [
       [:♜, :♞, :♝, :♛, :♚, :♝, :♞, :♜,],
       [:♟, :♟, :♟, :♟, :♟, :♟, :♟, :♟,],
       [:_, :_, :_, :_, :_, :_, :_, :_,],
@@ -18,12 +19,18 @@ class Chessboard
       [:♖, :♘, :♗, :♕, :♔, :♗, :♘, :♖,],
     ]
 
-  def self.classic
-    self[CLASSIC_LAYOUT]
+  # layout is in the format of CLASSIC
+  def self.[](layout)
+    new(width, height, layout_to_pieces(layout))
   end
 
-  # layout is like CLASSIC_LAYOUT
-  def self.[](layout)
+  def self.classic
+    self[CLASSIC]
+  end
+
+  # layout is a nested array like CLASSIC, returns
+  # a hash of {[row:(0..7), col:(0..7)] => Chesspiece}
+  def self.layout_to_pieces(layout)
     height = layout.length
     width = layout[0].length
     pieces = {}
@@ -34,11 +41,12 @@ class Chessboard
         end
       end
     end
-    new(width, height, pieces)
+    pieces
   end
 
   # pieces is a hash of {[row:(0..7), col:(0..7)] => Chesspiece}
-  def initialize(width=8, height=8, pieces=classic.pieces)
+  def initialize(width=8, height=8, pieces=nil)
+    pieces = pieces || Chessboard.layout_to_pieces(CLASSIC)
     @width, @height, @pieces = width, height, pieces
     pieces.each { |pos, piece| piece.square = self[*pos] }
   end

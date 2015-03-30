@@ -49,7 +49,7 @@ class Chesspiece
   end
 
   NORTH, SOUTH = Vector[-1, 0], Vector[1, 0]
-  EAST = Vector[0, 1], Vector[0, -1]
+  EAST, WEST = Vector[0, 1], Vector[0, -1]
   NORTHEAST, NORTHWEST = NORTH + EAST, NORTH + WEST
   SOUTHEAST, SOUTHWEST = SOUTH + EAST, SOUTH + WEST
 
