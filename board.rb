@@ -20,7 +20,11 @@ class Chessboard
     ]
 
   # layout is in the format of CLASSIC
-  def self.[](layout)
+  # if unspecified, creates an empty 8x8 board.
+  def self.[](layout=nil)
+    return new(8, 8, {}) unless layout
+    height = layout.length
+    width = layout[0].length
     new(width, height, layout_to_pieces(layout))
   end
 
@@ -31,8 +35,6 @@ class Chessboard
   # layout is a nested array like CLASSIC, returns
   # a hash of {[row:(0..7), col:(0..7)] => Chesspiece}
   def self.layout_to_pieces(layout)
-    height = layout.length
-    width = layout[0].length
     pieces = {}
     layout.each_with_index do |row, row_idx|
       row.each_with_index do |sym, col_idx|
