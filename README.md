@@ -39,7 +39,7 @@ of a game:
     white's turn.
     white, your move? d2
     moves for white pawn d2: d3, d4
-    white, your move? d4
+    white, move where? d4
 
     Ok, white's pawn d2 to d4.
 
@@ -57,7 +57,7 @@ If a capture is available, the program says so when it lists the move:
     black's turn.
     black, your move? d5
     moves for black's pawn d5: e4
-    black, your move? e4
+    black, move where? e4
 
     Ok, black's pawn d5 captures white's pawn e4.
 
@@ -75,7 +75,7 @@ And on and on until:
     black's turn.
     black, your piece? e2
     moves for black's rook e2: a2, b2, c2, d2, f2, g2, h2, e1, e3, e4, e5, e6, e7, e8
-    black, your move? e1
+    black, move where? e1
 
     Ok, black's pawn e2 to capture white's knight e1. Checkmate.
 
