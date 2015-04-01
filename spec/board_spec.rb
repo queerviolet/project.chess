@@ -1,5 +1,5 @@
 describe 'a board' do
-  let (:board) { Board.new }
+  let (:board) { Chessboard.new }
 
   it 'starts with 32 pieces, 16 black, 16 white' do
     expect(board.pieces.length).to equal(32)
