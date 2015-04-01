@@ -1,6 +1,24 @@
 # Chess
 Build a command line chess game with object oriented programming.
 
+## Quick overview of chess rules
+
+[Chess](http://en.wikipedia.org/wiki/Chess) is played on a 8x8 board.
+The players are given colors, black and white.
+The goal of the game is to [checkmate](http://en.wikipedia.org/wiki/Checkmate)
+the other player, putting them into a situation where their king is threatened
+with capture and cannot escape.
+
+Each player begins play with:
+  * 1 [king](http://en.wikipedia.org/wiki/King_(chess))
+  * 1 [queen](http://en.wikipedia.org/wiki/Queen_(chess))
+  * 2 [rooks](http://en.wikipedia.org/wiki/Rook_(chess))
+  * 2 [knights](http://en.wikipedia.org/wiki/Knight_(chess))
+  * 2 [bishops](http://en.wikipedia.org/wiki/Bishop_(chess))
+  * 8 [pawns](http://en.wikipedia.org/wiki/Pawn_(chess))
+
+Each type of piece [moves differently](http://en.wikipedia.org/wiki/Chess#Movement).
+
 ## Summary
 
 Today, let's build a command line chess game. Here's an example of the start
@@ -20,9 +38,7 @@ of a game:
        a  b  c  d  e  f  g  h 
     white's turn.
     white, your move? d2
-    moves for white pawn d2:
-      d3
-      d4 (advance two)
+    moves for white pawn d2: d3, d4
     white, your move? d4
 
     Ok, white's pawn d2 to d4.
@@ -40,8 +56,7 @@ If a capture is available, the program says so when it lists the move:
        a  b  c  d  e  f  g  h 
     black's turn.
     black, your move? d5
-    moves for black's pawn d5:
-      e4 (captures white's pawn)
+    moves for black's pawn d5: e4
     black, your move? e4
 
     Ok, black's pawn d5 captures white's pawn e4.
@@ -59,9 +74,8 @@ And on and on until:
        a  b  c  d  e  f  g  h 
     black's turn.
     black, your piece? e2
-    moves for black's rook e2:
-      1.  e1 (capture white's knight) [checkmate]
-    black, your move? 1
+    moves for black's rook e2: a2, b2, c2, d2, f2, g2, h2, e1, e3, e4, e5, e6, e7, e8
+    black, your move? e1
 
     Ok, black's pawn e2 to capture white's knight e1. Checkmate.
 
@@ -149,7 +163,7 @@ later when you try to call `can?` with an array of `['d', 6]`.
 
 Likewise, be specific about when a method is allowed to return invalid values.
 In this case, I've decided that `Piece`s can return moves which are off the
-board or 
+board or overlap other pieces.
 
 You don't have to write interfaces for any class which has the same interface
 as another. For example, once you've written the interface for the `Piece`
